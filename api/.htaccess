@@ -1,0 +1,13 @@
+RewriteBase /
+Options +FollowSymLinks
+IndexIgnore */*
+RewriteEngine on
+
+#if a directory or file exist, use it
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#otherwise forward it to index.php
+RewriteRule . index.php
+
+php_flag display_errors on
