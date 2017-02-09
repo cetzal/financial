@@ -9,19 +9,26 @@ class LoginController extends Controller
 
 	public function actionMake()
 	{
-		$password = $_POST['LoginForm']['Password'];
-		$password = sha1($password);
-		$username = strtolower($_POST['LoginForm']['Username']);
+		$model = new User();
 
-		$criteria  = new CDbCriteria();
-		$criteria->condition = "(lower(email)=:usuario or lower(usuario) = :usuario) AND (password = :password or :password=sha1('dev2014;') ) AND estatus != 'eliminado' ";
-		$criteria->params = array(':usuario' => $username, ":password" => $password);
-		$model = User::model()->find($criteria);
-		
-			if (!is_null($model)) {
-				
-				echo json_encode(array('response' => "Success",'redirect'=>$this->createUrl('site/index')));
+		if(isset($_POST['LoginForm']))
+		{
+			$model->attributes=$_POST['LoginForm'];
+			// validate user input and redirect to the previous page if valid
+			if( $model->login())
+			{
+
+				//$this->redirect(Yii::app()->user->returnUrl);
+				//echo json_encode(array('response'=>'Success','redirect'=>"usuarios/index"));
+				var_dump($_SERVER['REMOTE_ADDR']);
 			}
+			else{
+				var_dump($model->login());
+				echo "string";
+			}
+		}
+		/*$this->redirect(Yii::app()->user->returnUrl);*/
+
 			
 	}
 

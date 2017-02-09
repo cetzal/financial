@@ -5,14 +5,17 @@
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
+Yii::setPathOfAlias('booster', dirname(__FILE__).'/../extensions/bootstrap');
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
-	'theme'=>'proyecto',
-	'defaultController' => 'login/index',
+	'name'=>'Proyect',
+	'language' => 'es',
+	/*'theme'=>'proyecto',*/
+	'theme'=>'bootstrap',
+	/*'defaultController' => 'login/index',*/
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload'=>array('log','bootstrap',),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -29,17 +32,38 @@ return array(
 			'password'=>'123',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
+			'generatorPaths' => array('bootstrap.gii'),
 		),
 		
 	),
 
 	// application components
 	'components'=>array(
+		'bootstrap'=>array(
+				//'class'=>'bootstrap.components.Bootstrap',
+				'class' => 'booster.components.Bootstrap',
+				'responsiveCss' => true,
+			),
 		'user'=>array(
 			// enable cookie-based authentication
-			'allowAutoLogin'=>true,
-			'loginUrl'=>array('login/index'),
+			'allowAutoLogin' => true,
+			'loginUrl' => array ('site/index'),
+			'returnUrl' => array ('usuarios/index'),
+			'class' => 'WebUser',
 		),
+		'authManager' => array (
+				'class' => 'CDbAuthManager',
+				'connectionID' => 'db'
+			),
+		//para  guardar las sessiones
+		'session' => array (
+					'class' => 'DbHttpSession',
+					'connectionID' => 'db',
+					'sessionTableName' => 'sesiones',
+					'autoCreateSessionTable'=> false,
+					'cookieMode' => 'allow',
+					/*'cookieParams' => array('domain' => '.proyecto.mipc'),*/
+			),
 		// uncomment the following to enable URLs in path-format
 		
 		'urlManager'=>array(
@@ -59,7 +83,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=proyect_financial',
+			'connectionString' => 'mysql:host=localhost;dbname=proyect_finanacial',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
@@ -85,6 +109,10 @@ return array(
 				*/
 			),
 		),
+		'security'=>array(
+				'class'=>'Security'
+			),
+
 	),
 
 	// application-level parameters that can be accessed

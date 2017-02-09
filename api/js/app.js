@@ -9,7 +9,7 @@ var $appfinancial = new Object;
 		$(document).delegate("#login-form","submit",function(e){
 			e.preventDefault();
 			var formData = $("#login-form").serialize();
-			var LoginResponse = $appfinancial.Event.gJSON("/login/make",formData,"POST",false);
+			var LoginResponse = $appfinancial.Event.gJSON("/login/Make",formData,"POST",false);
 
 			console.log(LoginResponse);
 

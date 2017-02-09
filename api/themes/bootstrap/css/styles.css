@@ -1,0 +1,270 @@
+body{
+	background-color:#EEEEEE;
+}
+.form-horizontal .control-label{
+	/*width:15%*/
+}
+.hero-unit{
+	margin-bottom:0px;
+	background-color:transparent;
+}
+.hero-unit h1{
+	color:#rgb(31,73,125);
+}
+.navbar-inner{
+	background-color:#152e5b;
+	/*background-image:-moz-linear-gradient(top, #dadbdc, #dadbdc);
+	background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#dadbdc), to(#dadbdc));
+	background-image:-webkit-linear-gradient(top, #dadbdc, #dadbdc);
+	background-image:-o-linear-gradient(top, #dadbdc, #dadbdc);
+	background-image:linear-gradient(to bottom, #dadbdc, #dadbdc);*/
+	background-image:none;
+}
+.navbar .brand{
+	padding: 0px 20px 0px 20px;
+}
+.row{
+	margin-left:0px;
+}
+a:hover{
+	text-decoration:none;
+}
+#page {
+    padding-top: 5px;    	
+}
+#bg{
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:-1;
+    display:none;
+}
+.breadcrumb{
+	margin-bottom:0px;
+	margin-top:0px;
+	float:left;
+	background:none;
+}
+#footer{
+	text-align:center;
+	background-color:#152e5b; 
+	color:#fff;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+.sombra{	
+	
+}
+.sombra:hover{	
+	/*box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);*/
+}
+#content{	
+	background-color:#FFFFFF;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+#area-content{
+	margin:20px 15px 15px 20px;
+}
+.hero-unit{
+	padding-top:30px;
+	/*background-color:#FFFFFF;*/
+}
+.popover-content{
+	font-size:12px;
+	line-height:15px;
+}
+.btn{
+	background-color:rgb(244,148,1);
+	background-image:none;
+}
+.btn:hover{
+	background-color:rgb(241,180,83);
+	background-image:none;
+}
+.btnGray{
+	background-color:rgb(245, 245, 245)
+}
+.btnGray:hover{
+	background-color:rgb(220, 220, 220)
+}
+.bootstrap-select>button{
+	background-color:#E6E6E6;
+	background-image:none;
+}
+.bootstrap-select>button:hover{
+	background-color:#E6E6E6;
+	background-image:none;
+}
+.caption{
+	text-decoration:none;
+}
+.caption:hover{
+	text-decoration:none;
+}
+a.thumbnail.active {
+  border-color: #0088cc;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+  -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+  box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);  
+}
+.btn.active:hover{
+	background-color:#e6e6e6;
+	background-image:none;
+}
+.titulos{
+	text-align:center;
+	color:rgb(31,73,125);
+}
+.titulo{	
+	font-weight:bold;
+	display:block;
+}
+.subtitulo{	
+	font-weight:bold;
+	color: #7f7f7f;
+	display:block;
+}
+.divText {
+	/*overflow:hidden;*/
+	width:70px;
+	word-wrap: break-word;
+	height:100px;	 
+	overflow:hidden; 
+	text-overflow:ellipsis;   
+}
+.divText:hover {
+	text-overflow:inherit;
+	overflow:visible;
+	cursor: pointer;  
+}
+.ceroMargin{
+	margin-top:0px;
+}
+.ceroMarginBottom{
+	margin-bottom:0px;
+}
+.form-horizontal.ceroMarginbottom .control-group{
+	margin-bottom:0px;
+}
+.contenedor{
+	/*background-color:#FFFFFF;*/
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+	word-wrap:break-word;
+	padding:30px 20px 30px 20px;
+	
+}
+.table-ultracondensed{
+	padding:10px 10px	
+}
+.table-ultracondensed td{
+	padding:0px 10px	
+}
+.grid-view .table.items tr.selected td{
+	background: none repeat scroll 0% 0% rgb(220, 230, 240);
+}
+
+/*CSS para graficas*/
+.svg{
+	height:150px;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: rgb(31,73,125);
+}
+
+.bar:hover {
+  fill: rgb(24,109,146) ;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/*Labels del Grafico*/
+.ChartLabels{
+	background-color:#000;
+	padding:3x;
+	margin:1px;
+	color:white;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+
+/*Fracciones*/
+.fraction {
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	letter-spacing: 0.01em;
+	text-align: center;
+}
+
+.fraction>span {
+	display: block;
+	padding: 0.2em;
+}
+
+.fraction span.fdn {
+	border-top: thin solid black;
+}
+
+.fraction span.bar {
+	display: none;
+}
+
+/* Estilo para crear listas con forma de arbol*/
+ ul.tree, ul.tree ul { 
+ 	list-style-type: none; 
+ 	background: url(vline.png) repeat-y; margin: 0; padding: 0;
+ 	text-align:left; 
+ } 
+ ul.tree ul { 
+ 	margin-left: 10px; 
+ } 
+ ul.tree li { 
+ 	margin: 0; 
+ 	padding: 0 12px; 
+ 	line-height: 20px; 
+ 	background: url(node.png) no-repeat; 
+ 	color: #369; 
+ 	font-weight: bold; 
+ }
+ .texto-tarea{
+ 	display:none;
+ }
+ .tarea>a>img:hover + .texto-tarea{
+ 	/*display:block;*/
+ }
