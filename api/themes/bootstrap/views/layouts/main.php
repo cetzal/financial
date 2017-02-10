@@ -204,6 +204,8 @@
 	    <script src="jquery.floating-messages.min.js"></script> -->
     <!--end plugin show info-->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.6.1/less.min.js"></script>
+	<!--es el controlatodo  el sistema-->
+	<script type="text/javascript" src="<?php echo yii::app()->request->baseUrl; ?>/js/app.js"></script>
 	<script type="text/javascript">
 		//$('head style[type="text/css"]').attr('type', 'text/less');
 		
@@ -342,7 +344,7 @@
 			'<div class="pull-left" style="margin-bottom:5px"><a href="'.Yii::app()->baseUrl.'"><img style="height:20px;padding:20px 5px 5px 5px;" src="'.Yii::app()->baseUrl.'/images/main/logosoftcredito70.png" /></a></div>',
 			'<div class="nav pull-left">
 				<li class="dropdown">
-		            <a href="'.Yii::app()->createUrl("catalogoPromocion/index").'">Promoción</a>
+		            <a href="'.Yii::app()->createUrl("proyectos/index").'">Proyectos</a>
 		            <ul class="dropdown-menu" role="menu">
 		                
 		            </ul>

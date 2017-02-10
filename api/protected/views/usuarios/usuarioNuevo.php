@@ -5,13 +5,13 @@
 
 <div class="" id="app_messages"></div>
 
-<div class="panel with-nav-tabs panel-success">
-	<div class="panel-heading">
-		<ul class="nav nav-tabs" id="nav_tabs">
+
+	
+		<!-- <ul class="nav nav-tabs" id="nav_tabs">
 			<li id="li_general"     class="active"><a href="#tab_general" data-toggle="tab">Datos Generales</a></li>
-			<!--li id="li_fiscal"   class=""><a href="#tab_fiscal" data-toggle="tab">Permisos</a></li-->
-		</ul>
-	</div>
+			li id="li_fiscal"   class=""><a href="#tab_fiscal" data-toggle="tab">Permisos</a></li
+		</ul> -->
+	
 
 
 	<div id="panel-collapse-1" class="collapse in">
@@ -34,4 +34,3 @@
 
 		</div>
 	</div>
-</div>

@@ -17,8 +17,10 @@ class WebUser extends CWebUser {
 		return $user->perfil;
 	}
 	function getPerfil() {
+		//  cambie los perfiles por el modelo permisos 
 		$user = $this->loadUser ( Yii::app ()->user->id );
-		$perfil=Perfiles::model()->findByAttributes(array('clave'=>$user->perfil));
+		//$perfil=Permiso::model()->findByAttributes(array('clave'=>$user->perfil));
+		$perfil=Permiso::model()->findByAttributes(array('ID'=>$user->permiso_ID));
 		return $perfil->perfil;
 	}
 	function getEmail() {
@@ -82,7 +84,7 @@ class WebUser extends CWebUser {
 	function isPermitted() {		
 		$user = $this->loadUser ( Yii::app ()->user->id );
 		if($user!==null){
-			$perfil=Perfiles::model()->findByAttributes(array('clave'=>$user->perfil));
+		/*	$perfil=Perfiles::model()->findByAttributes(array('clave'=>$user->perfil));
 			if($perfil){				
 				$modulo=Modulos::model()->findByAttributes(array('nombre'=>Yii::app()->controller->uniqueId));
 				if($modulo){
@@ -109,7 +111,7 @@ class WebUser extends CWebUser {
 
 			}else{
 				return false;
-			}
+			}*/
 
 		}else{
 			return false;
@@ -170,7 +172,8 @@ class WebUser extends CWebUser {
 		if ($this->_model === null) {
 			if ($id !== null)
 				//$this->_model = Usuarios::model ()->findByAttributes(array('id'=>$id,'status'=>1));
-				$this->_model = Usuarios::model ()->findByAttributes(array('id'=>$id));
+				//cambie modelo Usuarios por  user
+				$this->_model = User::model ()->findByAttributes(array('ID'=>$id));
 		}
 		return $this->_model;
 	}

@@ -20,6 +20,64 @@ class SiteController extends Controller
 			),
 		);
 	}
+	public function accessRules() {
+		return array(
+			array (
+					'allow', // allow admin user to perform 'admin' and 'delete' actions
+					'actions' => array (							
+							'operaciones',
+							'dop',
+					),
+					'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getUser()=='admin2'"
+			),
+			array (
+					'allow', // allow admin user to perform 'admin' and 'delete' actions
+					'actions' => array (
+							'condonar',
+							'declinarCredito',
+							'vencerCredito',
+							'reestructurar',
+							'setDateA',
+							'operaciones',
+							'dop',
+					),
+					'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getPerfil()=='Administrador'"
+			),
+			array (
+				'allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions' => array (
+						'index',
+						'comisiones',
+						'personalizados',
+						'parcialidades',
+						'pagar',
+						'closeamortizacion',
+						'pagarDisposicion',
+						'pagarIndividual',
+						'anticipar',						
+						'guardar',
+						'delete',
+						'mora',
+						'interes',
+						'export',
+						'calcularPlazo',
+						'grupoSolidario',
+						'pagarD',
+						'filterClientes',
+						'filterSolicitudes',
+						'getDeuda',
+						'disposicion',
+				),
+				'expression' => "Yii::app()->user->isPermitted()"				
+			),
+			array (
+				'deny', // deny all users
+				'users' => array (
+						'*'
+				)
+			)
+		);
+	}
 
 	/**
 	 * This is the default 'index' action that is invoked
@@ -29,8 +87,16 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-
-		$this->renderPartial('login');
+		 	if(Yii::app()->user->isGuest) 
+        	{
+                //usuario invitado              
+                 $this->renderPartial('login');
+                
+       		 }else
+        	{       
+                //usuario logueado      
+               $this->redirect("usuarios/index");
+       		}
 	}
 
 	/**

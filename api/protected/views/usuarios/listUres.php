@@ -1,85 +1,86 @@
-
-<h1 class="page-heading"> Lista de Usuarios </h1>
-<div class="the-box">
-	<div class="row">
-		<div class="col-lg-10  col-md-10 col-sm-10"></div>
-		<div class="col-lg-12  col-md-12 col-sm-12">
-			<div class="pull-right">
-					<a href="<?php echo Yii::app()->createUrl('usuarios/nuevoUsuario'); ?>" class="btnMenuDelegated" title="" rel="nuevo_usuario" data-vars="{}">
-						<button  id="btn_nuevo" class="btn btn-primary btn-large"><i class="fa fa-plus"></i> Nuevo Usuario</button>
-						<!--style="float:right;"-->
-					</a>
-	  			<a class="" title="">
-	  				<button class="btn btn-primary btn-large" onclick="$adivorEngine.Usuarios.imprimirUsuariosexcel()">
-	  				<i class="fa fa-file-excel-o"></i> Descargar Lista en Excel</button>
-	  			</a>
-			</div>
-		</div>
+<div class="contenedor">
+	<h1>Lista de Usuarios</h1>
+	<div class="row-fluid">
 	</div>
-	<br>
-	<div class="table-responsive">
-		<table class="table table-striped table-hover" id="datatable-usuarios">
-		<thead class="the-box dark full">
-			<tr>
-				<th>Nombre Usuario</th>
-				<th>Nombre Empleado</th>
-				<th>Usuario</th>
-				<th>E-mail</th>
-				<th>Roles</th>
-				<th class="centrado">Estatus</th>
-				<th class="centrado">Acciones</th>
-			</tr>
-		</thead>
-		<tbody>
-	
-	
-			<?php
-			foreach ($usuarios as $usuario)
-			{
-				$perm = "";
-				/*if ($usuario->permiso)
-				{
-					$perm = $usuario->permiso->nombre;
-
-				}*/
-
-			?>
-				<tr class='' id="">
-				<td> <?php echo $usuario->nombre ?></td>
-				<td><?php //echo $usuario->nombreEmpleado ?></td>
-				<td> <?php echo $usuario->usuario ?> </td>
-				<td> <?php echo $usuario->email ?> </td>
-				<td> <?php echo $perm; ?></td>
-				<td class="centrado">
-					<?php 
-						if($usuario->estatus == "activo") 
-						{
-							echo "<i class='fa fa-check'></i>"; 
-						}else {
-							echo "<i class='fa fa-times'></i>";
-						}
-					?>
-				</td>
-				<td class="centrado">
-					<a href="#" rel="editar_usuario" class="btnMenuDelegated" data-vars='{"id":<?php echo $usuario->ID; ?>}' title="Editar Usuario">
-						<i class="fa fa-pencil icon-circle icon-xs icon-default"></i>
-					</a>
-					
-					<a href="#" rel="permisos_user" class="btnMenuDelegated" data-vars='{"id":<?php echo $usuario->ID; ?>}' title="Editar Permisos">
-						<i class="fa fa-list icon-circle icon-xs icon-default"></i>
-					</a>			
-					
-					<?php //if($permiso->eliminar()){ ?>
-						<a href="#" rel="/usuarios/deleteUsuario" class="btnMenuDeleted" data-vars='{"id":<?=$usuario->ID ?>}' title="Eliminar Usuario">
-							<i class="fa fa-times icon-xs icon-circle icon-default "></i>
-						</a>
-					<?php //} ?>
-				</td>
-			<?php
-			}
-			
-			?>
-			</tbody>
-		</table>
-	</div>	
+	<script>
+		jQuery(document).on("click","#administradores-grid a.delete",function() {
+			if(!confirm("¿Realmente desea eliminar el administrador seleccionado?")) return false;
+			var th = this,
+			afterDelete = function(){};
+			jQuery("#administradores-grid").yiiGridView("update", {
+				type: "POST",
+				url: jQuery(this).attr("href"),
+				success: function(data) {
+					jQuery("#administradores-grid").yiiGridView("update");
+					afterDelete(th, true, data);
+				},
+				error: function(XHR) {
+					return afterDelete(th, false, XHR);
+				}
+			});
+			return false;
+		});
+	</script>
+	<?php $this->widget('bootstrap.widgets.TbGridView', array( 
+			'id'=>'administradores-grid',
+	    	'type'=>'bordered condensed',
+	    	'dataProvider'=>$usuarios->search(),
+			'filter'=>$usuarios,
+	    	'template'=>"{items}\n{pager}",
+			'selectionChanged' => 'ChangeHrefs',
+	    	'columns'=>array(
+				array(
+						'name'=>'nombre',
+						'value'=>'$data->nombre',
+				),
+				array(
+						'name'=>'usuario',
+						'value'=>'$data->usuario',
+						
+				),
+				array(
+						'name'=>'email',
+						'value'=>'$data->email',
+						
+				),
+				array(
+						'name'=>'permiso_ID',
+						'value'=>'$data->permiso->nombre',
+						
+				),
+				array(
+						'name'=>'estatus',
+						'value'=>'$data->estatus',
+						/*'filter'=>CHtml::listData(array(array('id'=>'0', 'title'=>'No'),array('id'=>'1', 'title'=>'Si'),),'id','title'),*/
+				),
+		        array(
+		            'class'=>'bootstrap.widgets.TbButtonColumn',
+					'htmlOptions'=>array('style'=>'width: 50px'),
+					'template'=>'{editar} {borrar}',
+					'buttons'=>array(
+						'editar'=>array(
+							'label'=>'<i class=""></i>',
+							'imageUrl'=>Yii::app()->baseUrl.'/images/botones/editar20.png',
+							/*'url'=>'Yii::app()->user->isPermittedUrl("administradores","update")?Yii::app()->createUrl("administradores/update", array("id"=>$data->id)):""',*/
+							'url'=>'Yii::app()->createUrl("usuarios/update", array("id"=>$data->ID))',
+							'options'=>array(
+								'title'=>'Editar',
+								/*'class'=>Yii::app()->user->isPermittedUrl('administradores','update')?"":"btn-disabled"*/
+							),
+						),
+						'borrar'=>array(
+								'label'=>'<i class=""></i>',
+								'imageUrl'=>Yii::app()->baseUrl.'/images/botones/eliminar20.png',
+								/*'url'=>'Yii::app()->user->isPermittedUrl("administradores","delete")?Yii::app()->createUrl("administradores/delete", array("id"=>$data->id)):""',*/
+								'url'=>'Yii::app()->createUrl("usuarios/delete", array("id"=>$data->ID))',
+								'options'=>array(
+										'title'=>'Eliminar',
+										/*'class'=>Yii::app()->user->isPermittedUrl('administradores','delete')?"delete":"btn-disabled"*/
+								),
+						),
+					),
+		        ),
+    		),
+		));
+	?>
 </div>

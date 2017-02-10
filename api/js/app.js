@@ -14,8 +14,18 @@ var $appfinancial = new Object;
 			console.log(LoginResponse);
 
 			if (LoginResponse.response == "Success") {
-				window.location=LoginResponse.redirect;
+				window.location=$appfinancial.HOST + "/" +LoginResponse.redirect;
 			}
+		});
+
+		$(document).delegate(".btnMenuDelegated","click",function(e){
+			e.preventDefault();
+			$("#app_messages").html("");
+			var vars = $(this).attr("data-vars");
+			vars = $.parseJSON(vars);
+			var path = $(this).attr("rel");
+
+			$appfinancial.Event.findPath(path,vars);
 		});
 	};
 
@@ -52,6 +62,12 @@ var $appfinancial = new Object;
 			rValue = json;			
 		});		
 		return rValue;
+	};
+
+	//para redereccionar
+	this.Event.findPath = function(path,vars){
+		console.log(path);
+		window.location = $appfinancial.HOST + path;
 	};
 
 	this.init();

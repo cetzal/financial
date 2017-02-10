@@ -2,6 +2,71 @@
 
 class UsuariosController extends Controller
 {
+	public function filters()
+    {
+        return array(
+            'accessControl',
+        );
+    }
+    public function accessRules() {
+		return array(
+			array (
+					'allow', // allow admin user to perform 'admin' and 'delete' actions
+					'actions' => array (							
+							'operaciones',
+							'dop',
+					),
+					'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getUser()=='admin2'"
+			),
+			array (
+					'allow', // allow admin user to perform 'admin' and 'delete' actions
+					'actions' => array (
+							'condonar',
+							'declinarCredito',
+							'vencerCredito',
+							'reestructurar',
+							'setDateA',
+							'operaciones',
+							'dop',
+					),
+					'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getPerfil()=='Administrador'"
+			),
+			array (
+				'allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions' => array (
+						'index',
+						'Listausuarios',
+						'NuevoUsuario',
+						'parcialidades',
+						'pagar',
+						'closeamortizacion',
+						'pagarDisposicion',
+						'pagarIndividual',
+						'anticipar',						
+						'guardar',
+						'delete',
+						'mora',
+						'interes',
+						'export',
+						'calcularPlazo',
+						'grupoSolidario',
+						'pagarD',
+						'filterClientes',
+						'filterSolicitudes',
+						'getDeuda',
+						'disposicion',
+				),
+				'expression' => "Yii::app()->user->isPermitted()"				
+			),
+			array (
+				'deny', // deny all users
+				'users' => array (
+						'*'
+				)
+			)
+		);
+	}
+
 	public function actionIndex()
 	{
 		$this->render('index');
@@ -9,7 +74,9 @@ class UsuariosController extends Controller
 
 	public function actionListausuarios()
 	{
-		$model = User::model()->findAll();
+		/*$model = User::model()->findAll();*/
+		$model = new User();
+		$model->unsetAttributes ();
 		$this->render('listUres',array('usuarios' => $model ));
 	}
 

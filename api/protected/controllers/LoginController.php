@@ -19,8 +19,8 @@ class LoginController extends Controller
 			{
 
 				//$this->redirect(Yii::app()->user->returnUrl);
-				//echo json_encode(array('response'=>'Success','redirect'=>"usuarios/index"));
-				var_dump($_SERVER['REMOTE_ADDR']);
+				echo json_encode(array('response'=>'Success','redirect'=>"usuarios/index"));
+				/*var_dump($_SERVER['REMOTE_ADDR']);*/
 			}
 			else{
 				var_dump($model->login());
