@@ -206,6 +206,9 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.6.1/less.min.js"></script>
 	<!--es el controlatodo  el sistema-->
 	<script type="text/javascript" src="<?php echo yii::app()->request->baseUrl; ?>/js/app.js"></script>
+	<script type="text/javascript" src="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/chosen/chosen.css"></script>
+	<script type="text/javascript" src="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/chosen/chosen.jquery.min.js"></script>
+	<script type="text/javascript" src="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/chosen/chosen.jquery.js"></script>
 	<script type="text/javascript">
 		//$('head style[type="text/css"]').attr('type', 'text/less');
 		

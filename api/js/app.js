@@ -52,26 +52,32 @@ var $appfinancial = new Object;
 		$(document).delegate('.btnguardart', 'click', function(event) {
 			var nombretema = $('#nombret').val();
 			var response = $appfinancial.Event.gJSON("/proyectos/guardartema",{"nombre":nombretema},"POST",false);
+
+			if (response.response =="Success") {
+				window.location.reload();
+			}
 			
 		});
 		//from for crear tareas
 		$(document).delegate('#reassign-button', 'click', function(event) {
 			$('#cont-reassign-form').toggle();
-		$('#cont-email-form').css('display','none');
+			$('#cont-email-form').css('display','none');
 		return false;
 		});
 		//este es el que  envia el formulario de tareas
 		$(document).delegate("#tareas-form","submit",function(e){
 			e.preventDefault();
-			var formData = $("#login-form").serialize();
-			var LoginResponse = $appfinancial.Event.gJSON("/login/Make",formData,"POST",false);
+			var formData = $("#tareas-form").serialize();
+			var LoginResponse = $appfinancial.Event.gJSON("/proyectos/Guardartarea",formData,"POST",false);
 
 			console.log(LoginResponse);
 
 			if (LoginResponse.response == "Success") {
-				window.location=$appfinancial.HOST + "/" +LoginResponse.redirect;
+				window.location=$appfinancial.HOST +LoginResponse.redirect;
 			}
 		});
+
+
 		
 	};
 

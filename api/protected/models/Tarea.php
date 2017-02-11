@@ -33,7 +33,7 @@ class Tarea extends CActiveRecord
 			array('descripcion', 'length', 'max'=>250),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('ID, id_tema, titulo, fecha_hora', 'safe', 'on'=>'search'),
+			array('ID, id_tema, titulo, descripcion, fecha_hora', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,6 +45,7 @@ class Tarea extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'id_tareas_des'=>array(self::BELONGS_TO,'TareaDes','ID'),
 		);
 	}
 
@@ -56,7 +57,7 @@ class Tarea extends CActiveRecord
 		return array(
 			'ID' => 'ID',
 			'id_tema' => 'Tema',
-			'titulo' => 'Nombre',
+			'titulo' => 'Titulo',
 			'descripcion' => 'Descripción',
 			'fecha_hora' => 'Fecha Hora',
 		);

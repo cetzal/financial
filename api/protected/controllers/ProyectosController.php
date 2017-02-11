@@ -88,8 +88,52 @@ class ProyectosController extends Controller
 	public function actionAgregarListTareas($id)
 	{
 		$model = $this->loadModel($id);
-		$modeltara = new tarea();
-		$this->render("_creartarea",array('model'=>$model,'modeltareas'=>$modeltara));
+		$modeltara = new Tarea();
+		$modelList = Tarea::model()->findAll("id_tema =".$id);
+		$this->render("_creartarea",array('model'=>$model,'modeltareas'=>$modeltara, 'listas'=>$modelList));
+	}
+	public function actionGuardartarea()
+	{
+		$modeltara = new Tarea();
+		$modeltara->attributes = $_POST['tarea'];
+		//$modeltara->id_tema =$_POST['tarea']["id_tema"];
+		//$modeltara->titulo = $_POST['tarea']["titulo"];
+	    //$modeltara->desacripcion = $_POST['tarea']["descripcion"];
+
+		if ($modeltara->save()) {
+			$id = $this->ultimoid();
+			echo json_encode(array('response'=>'Success','redirect'=>$this->createUrl('proyectos/crearlistatarea',array('id'=>$id))));
+		}else
+		{
+			echo json_encode(array('response'=>'Error'));
+		}
+
+	}
+
+
+	public function actionCrearlistatarea()
+	{
+		$tareas = Tarea::model()->find("ID =".$_GET['id']);
+		$tareasDes = TareaDes::model()->findAll("id_tarea =".$_GET['id']);
+		if (isset($_POST['TareaDes'])) {
+			$modelDest = new TareaDes();
+			$modelDest->attributes = $_POST['TareaDes'];
+			$modelDest->fecha_inicio = date("Y-m-d",strtotime($modelDest->fecha_inicio));
+			$modelDest->fecha_final = date("Y-m-d",strtotime($modelDest->fecha_final));
+			$modelDest->status = "activo";
+			$modelDest->save();
+		}
+		$this->render("listatareas", array('tarea'=>$tareas, 'desctarea' =>$tareasDes));
+	}
+	private static function ultimoid(){
+	    $sql = "select max(ID) as max from tarea";
+	    $resid = yii::app()->db->createCommand($sql)->queryAll();
+	    $id = 0;
+	    foreach ( $resid as $idconfig) {
+	    	$id = $idconfig['max'];
+	    }
+
+	    return $id;
 	}
 	public function loadModel($id) {
 		$model = Tema::model ()->findByPk ( $id );
