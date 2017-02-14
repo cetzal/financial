@@ -44,7 +44,8 @@ $i = 0;
                                 </div>
                                 <div class='mdl-card__supporting-text'>
                                     <div class='content_imput'>
-                                        <p style='margin-left:100px !important;'><i class='material-icons'>&#xE145;</i><br>Agrgar</p><br>
+                                        <p style='margin-left:95px !important;'><i class='material-icons'>&#xE145;</i><br></p><br>
+                                        <p style='margin-top:-25px!important; margin-left:68px !important;'>Agregar Tema</p>
                                     </div>
                                     <div class='contener_impor'>
                                     <input type='text' style='' placeholder='Nombre del tema' id='nombret'><br><button class='btn btn btn-primary btnguardart'>Guardar</button><button class='btn btn-success btn-calcelar'>Cancelar</button><br><br>

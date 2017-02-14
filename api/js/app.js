@@ -64,6 +64,15 @@ var $appfinancial = new Object;
 			$('#cont-email-form').css('display','none');
 		return false;
 		});
+		//
+		$(document).delegate('#mostrar-from', 'click', function(event) {
+			id = $(this).attr("data-inf");
+			$('#nueva-tarea-form-'+id).toggle();
+			$('#cont-email-form').css('display','none');
+		return false;
+		});
+
+
 		//este es el que  envia el formulario de tareas
 		$(document).delegate("#tareas-form","submit",function(e){
 			e.preventDefault();
@@ -77,9 +86,48 @@ var $appfinancial = new Object;
 			}
 		});
 
+		//guardar objetivos de la tarea
+		$(document).delegate('#nueva_tarea', 'submit', function(event) {
+			event.preventDefault();
+			var formData = $("#nueva_tarea").serialize();
+			var LoginResponse = $appfinancial.Event.gJSON("/proyectos/todoTareas",formData,"POST",false);
+			if (LoginResponse.response == "Success") {
+				window.location.reload();
+			}
+		});
+		//btn btnformularioP
+		$(document).delegate('.btnformularioP', 'click', function(event) {
+			event.preventDefault();
+			id = $(this).attr("data-from");
+			var formData = $("#nueva_tarea-principal-"+id).serialize();
+			var LoginResponse = $appfinancial.Event.gJSON("/proyectos/todoTareas",formData,"POST",false);
+			if (LoginResponse.response == "Success") {
+				window.location.reload();
+			}
+		});
+		//delete btn
+		$(document).delegate('.btndelete', 'click', function(event) {
+			event.preventDefault();
+			var vars = $(this).attr("data-vars");
+			var id = $(this).attr("data-id");
+			var path = $(this).attr("href");
+			vars = $.parseJSON(vars);
 
+			var Response = $appfinancial.Event.gJSON(path,{"id":id},"POST",false);
+
+			if (Response.response=="Success") {
+				window.location.reload();
+			}
+			
+		});
 		
 	};
+
+	this.addlist = function(idtarea)
+	{
+		var view = $appfinancial.Event.gVIEWSecure("/proyectos/viewsList", {"idtarea": idtarea}, true);
+		$(".tareas").html(view);
+	}
 
 	this.Event = new Object;
 	this.Event.gJSON = function(url, data, type, cache){
@@ -100,7 +148,6 @@ var $appfinancial = new Object;
 		
 		//extras = {codigo: $.cookie('codigo'), lang:$.cookie('lang'), user_id : $.cookie("user")};
 		
-		
 		//$.extend(true, data, extras);
 		
 		$.ajax({
@@ -113,6 +160,35 @@ var $appfinancial = new Object;
 		}).done(function( json ) {
 			rValue = json;			
 		});		
+		return rValue;
+	};
+	//para peticion de view
+
+	this.Event.gVIEWSecure = function(url, datax, cache,beforeSendFunction,completeFunction){
+
+		//HACER LAS PETICIONES
+		if(typeof(cache) != "undefined"){
+			cache = cache;
+		}else{
+			cache = false;
+		}
+		if(typeof(url) == "undefined"){
+			url = "/cpp/test";	
+		}
+		$.ajax({
+			type: "POST",
+			url: $appfinancial.HOST + url,
+			dataType: 'html',
+			data: datax,
+			async: false,
+			cache: cache,
+			beforeSend : beforeSendFunction,
+            complete : completeFunction
+		}).done(function(html){
+			rValue = html;
+		}).fail(function (response) {
+			rValue = $appfinancial.Core.setLog('view',response.status,response.responseText,url,data);
+		});
 		return rValue;
 	};
 

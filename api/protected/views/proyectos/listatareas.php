@@ -1,29 +1,40 @@
-<!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" /> -->
-<!-- <link rel="stylesheet" type="text/css" href="select2-bootstrap.css">
- -->
-<!-- script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script> -->
+<style>
+.wrap {
+	max-width: 600px;
+	width: 90%;
+}
+	/* - Tareas - */
+.tareas .lista {
+	list-style: none;
+}
+ 
+.tareas .lista li {
+	border-bottom: 1px solid #B6B6B6;
+}
+ 
+.tareas .lista li a {
+	color: #212121;
+	display: block;
+	padding: 5px 0;
+	text-decoration: none;
+}
+ 
+.tareas .lista li a:hover {
+	text-decoration: line-through;
+}
+</style>
 <script>
 	jQuery(document).ready(function($) {
-		$('.chosen-select').chosen({ allow_single_deselect: true });
+		$('.chosen-select').chosen();
 	});
 </script>
 
 <div class="contenedor">
 	<h1><?php echo $tarea->titulo; ?></h1>
-	<div class="contener_tarea">
-		<ul>
-		<?php foreach ($desctarea as $key => $value) { ?>
-		<li>
-		checkbox
-			<?php echo $value->descripcion;?>
-		</li>
-	   <?php } ?>
-			
-		</ul>
+	<div class="tareas">
+		<?php $this->renderPartial("_Lista", array("modeltarea"=>$desctarea)); ?>
 	</div>
+	
 	<div class="form">
 
 	<?php  /** @var BootActiveForm $form */
@@ -50,7 +61,7 @@
 		<div class="control-group">
 			<label class="control-label">Asignar</label>
 			<div class="controls">
-				 <?php echo CHtml::dropDownList('empleado_id', "", array(1,2,3,4,5,6,7,8,9,10,11), array('class'=>' form-control chosen-select','multiple'=>true, 'data-placeholder'=>"Seleccione...")); ?>
+				 <?php echo CHtml::dropDownList('empleado_id', "", User::getLista(), array('class'=>' form-control chosen-select','multiple'=>true, 'data-placeholder'=>"Seleccione...")); ?>
 			</div>
 		</div>
 		<div class="control-group">

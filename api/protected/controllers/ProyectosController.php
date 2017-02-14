@@ -30,16 +30,6 @@ class ProyectosController extends Controller
 	*/
 	public function actionIndex()
 	{
-		$fechaactual = date("Y-m-d");
-		$arrayfecha = array();
-
-		for ($i=0; $i < 15; $i++) 
-		{ 
-			$diasfecha = date('Y-m-d', strtotime("-$i DAYS",  strtotime($fechaactual) ) );
-
-			$arrayfecha[]= $diasfecha;
-
-		}
 
 		$modelTema = Tema::model()->findAll();
 
@@ -96,9 +86,6 @@ class ProyectosController extends Controller
 	{
 		$modeltara = new Tarea();
 		$modeltara->attributes = $_POST['tarea'];
-		//$modeltara->id_tema =$_POST['tarea']["id_tema"];
-		//$modeltara->titulo = $_POST['tarea']["titulo"];
-	    //$modeltara->desacripcion = $_POST['tarea']["descripcion"];
 
 		if ($modeltara->save()) {
 			$id = $this->ultimoid();
@@ -115,15 +102,63 @@ class ProyectosController extends Controller
 	{
 		$tareas = Tarea::model()->find("ID =".$_GET['id']);
 		$tareasDes = TareaDes::model()->findAll("id_tarea =".$_GET['id']);
-		if (isset($_POST['TareaDes'])) {
-			$modelDest = new TareaDes();
+		$this->render("listatareas", array('tarea'=>$tareas, 'desctarea' =>$tareasDes));
+	}
+
+	public function actionTodoTareas()
+	{
+		$idulti = "";
+		$idtarea = 0;
+		$modelDest = new TareaDes();
+		if (isset($_POST['TareaDes'])) 
+		{	$idtarea = $_POST['TareaDes']['id_tarea'];
 			$modelDest->attributes = $_POST['TareaDes'];
 			$modelDest->fecha_inicio = date("Y-m-d",strtotime($modelDest->fecha_inicio));
 			$modelDest->fecha_final = date("Y-m-d",strtotime($modelDest->fecha_final));
 			$modelDest->status = "activo";
-			$modelDest->save();
+			
+			if ($modelDest->save()) 
+			{
+				$idulti = $this->idDestrea();
+
+				if (isset($_POST['empleado_id'])) 
+				{
+
+					
+					foreach ($_POST['empleado_id'] as $key => $value) 
+					{
+						$modelrateauser = new TareasUsuario();
+						$modelrateauser->id_usuario    = $value;
+						$modelrateauser->id_des_tareas = $idulti;
+						$modelrateauser->fecha_hora = date("Y-m-d H:s");
+						$modelrateauser->save();
+					}
+				}
+
+			}
+			echo json_encode(array('response'=>'Success', 'data'=>$idtarea));
 		}
-		$this->render("listatareas", array('tarea'=>$tareas, 'desctarea' =>$tareasDes));
+	}
+	public function actionViewsList()
+	{
+		$idtarea = isset($_POST['idtarea']) ? $_POST['idtarea'] : 0;
+
+		$tareasDes = TareaDes::model()->findAll("id_tarea =".$idtarea);
+		$this->renderPartial("_Lista", array("modeltarea"=>$tareasDes));
+	}
+	//elimina la descripcion de la tarea
+	public function actionDelete()
+	{
+		$modelDest = TareaDes::model()->findByPk($_POST['id']);
+		
+		if ($modelDest->delete()) 
+		{
+			echo json_encode(array('response'=>"Success", 'mesage'=>'el itmes se elimino correctamente'));
+			exit();
+		}
+		echo json_encode(array('response'=>"Error", 'mesage'=>'intentelo mas tarde'));
+		//$this->redirect(array('proyectos/agregarListTareas'));
+
 	}
 	private static function ultimoid(){
 	    $sql = "select max(ID) as max from tarea";
@@ -134,6 +169,18 @@ class ProyectosController extends Controller
 	    }
 
 	    return $id;
+	}
+	private static function idDestrea()
+	{
+		 $sql = "select max(ID) as max from tarea_des";
+	    $resid = yii::app()->db->createCommand($sql)->queryAll();
+	    $id = 0;
+	    foreach ( $resid as $idconfig) {
+	    	$id = $idconfig['max'];
+	    }
+
+	    return $id;
+
 	}
 	public function loadModel($id) {
 		$model = Tema::model ()->findByPk ( $id );

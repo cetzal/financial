@@ -29,7 +29,12 @@
 	                 	<h5 class='mdl-card__title-text'>Tareas</h5>
 	            	</div>
 	            	<div class='mdl-card__supporting-text tamanio'>
-	                	<p></p>
+	                	<?php 
+                            $tarea = Tarea::model()->findAll("id_tema =".$model->ID." LIMIT 3");
+                             foreach ($tarea as $key => $arealizar) {
+                                echo $arealizar->titulo."<br>";
+                             }
+                         ?>
 	            	</div>
 	            	<div class='mdl-card__actions mdl-card--border'>
 	              	 <!-- <a class='mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect'>Read More</a>-->
