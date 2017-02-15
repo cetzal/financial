@@ -109,4 +109,16 @@ class TareaDes extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+	public static function getListaSelect($id){
+		$arrModel=TareasUsuario::model()->findAll("id_des_tareas =".$id);
+
+		$arrLista=array();
+		foreach($arrModel as $model){
+			$username = User::model()->find('ID ='.$model->id_usuario);
+			$arrLista[]=$username->ID;
+		}
+
+		return $arrLista;
+	}
 }

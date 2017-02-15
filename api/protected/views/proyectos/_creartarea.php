@@ -1,3 +1,8 @@
+<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500,400italic,700,700italic' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//storage.googleapis.com/code.getmdl.io/1.0.1/material.teal-red.min.css" />
+<script src="//storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js"></script>
+
 <style>
 .contetList{
 	width: 45%;
@@ -91,6 +96,8 @@
  	/* background: #b63b4d; */
  	/* color: #FFF; */
  }
+ 
+ 
 </style>
 <script>
 	jQuery(document).ready(function() {
@@ -98,7 +105,7 @@
 	});
 </script>
 <div class="contenedor">
-	<h1><?php echo $model->nombre; ?></h1>
+	<h1>Tema : <?php echo $model->nombre; ?></h1>
 	<div class="row-fluid">
 		<?php
 			$buttons=array(
@@ -176,10 +183,23 @@
 		          		<?php $contenido = TareaDes::model()->findAll("id_tarea =".$value->ID);
 
 						foreach ($contenido as $key => $arealizar) { ?>
-							<li><?php echo $arealizar->descripcion." -Fecha inicio ".$arealizar->fecha_inicio." - Fecha fina ".$arealizar->fecha_final."
+							<li><?php echo $arealizar->descripcion."<br> Fecha inicio ".$arealizar->fecha_inicio." - Fecha fina ".$arealizar->fecha_final." <br>
 							<a href='".Yii::app()->createUrl("proyectos/delete")."' class='btndelete' data-vars='{}' data-id='".$arealizar->ID."'> 
 							<img src='".Yii::app()->baseUrl.'/images/botones/eliminar20.png'."'></a>
-							<a href='#'> <img src='".Yii::app()->baseUrl.'/images/botones/editar20.png'."'></a>"; ?></li>
+							<a href='".Yii::app()->createUrl("proyectos/editar")."' class='btnEditar' data-vars='{}' data-id='".$arealizar->ID."'><img src='".Yii::app()->baseUrl.'/images/botones/editar20.png'."'></a><br><br>"; ?>
+
+							<?php 
+							$asinados = TareasUsuario::model()->findAll("id_des_tareas =".$arealizar->ID);
+							 foreach ($asinados as $key => $user) { 
+							 	$username = User::model()->find('ID ='.$user->id_usuario);
+							 	$rest = substr($username->usuario, 0, 1);
+							 	?>
+							 	<button class='mdl-button mdl-button--icon mdl-button--colored'><?php echo $rest; ?></button>
+							 	<?php echo $username->usuario; ?>
+							 <?php }  ?>
+												
+								
+							</li>
 							
 						<?php } ?>
 		           
@@ -220,26 +240,17 @@
 						<div class="control-group">
 							<label class="control-label">Fecha Inicio</label>
 							<div class="controls">
-								<?php //echo CHtml::textField("TareaDes[descripcion]", '', array('class' => 'form-control', 'placeholder' => 'Descripción')) ?>
 								<input type="date" name="TareaDes[fecha_inicio]">
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label">Fecha Final</label>
 							<div class="controls">
-								<?php //echo CHtml::textField("TareaDes[descripcion]", '', array('class' => 'form-control', 'placeholder' => 'Descripción')) ?>
 								<input type="date" name="TareaDes[fecha_final]">
 							</div>
 						</div>
 
 						<div class="form-actions">
-							<!-- <?php/* $this->widget('bootstrap.widgets.TbButton',
-							array('buttonType'=>'submit',
-								  'class'=> 'btnformularioP',
-								  'data-form'=>$value->ID,
-								  'type'=>'primary',
-								  'label'=>Yii::t('common', 'Save'))
-							);*/ ?> -->
 							<button Type='submit' class="btn btn-primary btnformularioP" id="mostrar-from" data-from="<?php echo $value->ID; ?>">Guardar</button>
 						</div>
 

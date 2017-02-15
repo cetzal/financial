@@ -95,6 +95,7 @@ var $appfinancial = new Object;
 				window.location.reload();
 			}
 		});
+
 		//btn btnformularioP
 		$(document).delegate('.btnformularioP', 'click', function(event) {
 			event.preventDefault();
@@ -104,6 +105,37 @@ var $appfinancial = new Object;
 			if (LoginResponse.response == "Success") {
 				window.location.reload();
 			}
+		});
+		//btn editar toda las tareas
+		$(document).delegate('.btnEdtaralltareas', 'click', function(event) {
+			event.preventDefault();
+			id = $(this).attr("data-from");
+			var formData = $("#nueva_tarea-principal-"+id).serialize();
+			var LoginResponse = $appfinancial.Event.gJSON("/proyectos/editartodoTareas",formData,"POST",false);
+			if (LoginResponse.response == "Success") {
+				window.location.reload();
+			}
+		});
+
+		//btnEditar-abre un pop-up
+		$(document).delegate('.btnEditar', 'click', function(event) {
+			event.preventDefault();
+			var vars = $(this).attr("data-vars");
+			var id = $(this).attr("data-id");
+			var path = $(this).attr("href");
+			vars = $.parseJSON(vars);
+
+			$.magnificPopup.open({
+	    		items:{
+	    			src: $appfinancial.Event.gVIEWSecure(path,{"idtareaDes":id},"POST",false),
+				    type: 'inline'
+	    		},
+	    		 closeBtnInside: true
+    	    });
+
+    	     jQuery(document).ready(function() {
+        		$(".chosen-select").chosen({width:"73%"});
+    		});
 		});
 		//delete btn
 		$(document).delegate('.btndelete', 'click', function(event) {

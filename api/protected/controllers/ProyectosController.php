@@ -160,6 +160,39 @@ class ProyectosController extends Controller
 		//$this->redirect(array('proyectos/agregarListTareas'));
 
 	}
+	public function actionEditar()
+	{
+		$idtareades = $_POST['idtareaDes'];
+		$modeltareasDes = TareaDes::model()->findByPk($idtareades);
+		$this->renderPartial("_viewsEditar", array('modeldestarea'=>$modeltareasDes));
+	}
+	public function actionEditartodoTareas()
+	{
+		$id = $_POST['TareaDes']['ID'];
+		$modeltareasDes = TareaDes::model()->findByPk($id);
+		$modeltareasDes->attributes = $_POST['TareaDes'];
+		$modeltareasDes->fecha_inicio = date("Y-m-d",strtotime($modeltareasDes->fecha_inicio));
+		$modeltareasDes->fecha_final = date("Y-m-d",strtotime($modeltareasDes->fecha_final));
+		$modeltareasDes->status = "activo";
+
+		if ($modeltareasDes->save()) {
+			TareasUsuario::model()->deleteAll("id_des_tareas =".$id);
+			if (isset($_POST['empleado_id'])) 
+			{
+				foreach ($_POST['empleado_id'] as $key => $value) 
+				{
+					$modelrateauser = new TareasUsuario();
+					$modelrateauser->id_usuario    = $value;
+					$modelrateauser->id_des_tareas = $id;
+					$modelrateauser->fecha_hora = date("Y-m-d H:s");
+					$modelrateauser->save();
+				}
+			}
+
+			echo json_encode(array('response'=>'Success', 'msg'=>'Se actualizo correctamente'));
+			exit();
+		}
+	} 
 	private static function ultimoid(){
 	    $sql = "select max(ID) as max from tarea";
 	    $resid = yii::app()->db->createCommand($sql)->queryAll();

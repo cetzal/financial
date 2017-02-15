@@ -30,7 +30,7 @@
 	            	</div>
 	            	<div class='mdl-card__supporting-text tamanio'>
 	                	<?php 
-                            $tarea = Tarea::model()->findAll("id_tema =".$model->ID." LIMIT 3");
+                            $tarea = Tarea::model()->findAll("id_tema =".$model->ID." order by ID DESC LIMIT 3");
                              foreach ($tarea as $key => $arealizar) {
                                 echo $arealizar->titulo."<br>";
                              }
