@@ -48,7 +48,7 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin' => true,
 			'loginUrl' => array ('site/index'),
-			'returnUrl' => array ('usuarios/index'),
+			'returnUrl' => array ('home/index'),
 			'class' => 'WebUser',
 		),
 		'authManager' => array (

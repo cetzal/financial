@@ -95,7 +95,7 @@ class SiteController extends Controller
        		 }else
         	{       
                 //usuario logueado      
-               $this->redirect("usuarios/index");
+               $this->redirect("home/index");
        		}
 	}
 

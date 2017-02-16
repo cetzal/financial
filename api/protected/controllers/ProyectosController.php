@@ -1,5 +1,5 @@
 <?php
-
+class Task {}
 class ProyectosController extends Controller
 {
 	// Uncomment the following methods and override them if needed
@@ -193,6 +193,104 @@ class ProyectosController extends Controller
 			exit();
 		}
 	} 
+
+	public function actionListgantt()
+	{
+		header('Content-Type: application/json');
+		$result = array();
+		$datecurrent = date("Y-m-d");
+
+		/*$sql = "SELECT tm.ID AS idtema, tm.nombre as Ntema, tm.descripcion as desT, ta.ID AS idtarea,
+				ta.id_tema, ta.titulo, ta.descripcion as destarea, ta.fecha_hora as tafechahora, dest.ID as iddest,
+				dest.id_tarea, dest.descripcion as destareach, dest.fecha_inicio,  dest.fecha_final, tuser.ID as idtuser,
+				tuser.id_usuario, tuser.id_des_tareas, u.*
+				FROM tema tm 
+				INNER JOIN tarea ta ON ta.id_tema = tm.ID 
+				INNER JOIN tarea_des dest ON dest.id_tarea = ta.ID 
+				INNER JOIN tareas_usuario tuser ON tuser.id_des_tareas = dest.ID 
+				INNER JOIN user u ON u.ID = tuser.id_usuario";*/
+
+		/*$consult = Yii::app()->db->createCommand($sql)->queryAll();*/
+
+		/*$tema = Tema::model()->findAll();*/
+		$tarea = Tarea::model()->findAll();
+
+		foreach ($tarea as $key => $value) {
+			$r = new Task();
+			
+				// rows
+		      	$r->id = $value->ID;
+		      	$r->txt_tema = htmlspecialchars($value->titulo);
+		      	//$r->start = $value->fecha_hora;
+ 				//$r->end = date("Y-m-d");
+		      	$modeltareasDes = TareaDes::model()->findByPk($value->ID);
+
+		      	if (!is_null($modeltareasDes)) 
+		      	{
+		      		$r->children = $this->children($value->ID);
+		      		 
+		      	}
+
+		      	$result[] = $r;
+		}
+		
+		echo json_encode($result);
+
+	}
+	public function children($id)
+	{	
+		$result = array();
+		$modeltareasDes = TareaDes::model()->findAll("id_tarea =".$id);
+		foreach ($modeltareasDes as $key => $value) {
+			$r = new Task();
+
+			$asinados = TareasUsuario::model()->findAll("id_des_tareas =".$value->ID);
+
+			foreach ($asinados as $key => $userss) {
+
+				$username = User::model()->find('ID ='.$userss->id_usuario);
+
+				$nameuser = $username->usuario;
+			}
+			
+
+			$r->id = "0".$value->ID;
+		    $r->txt_tema = htmlspecialchars($value->descripcion);
+		    $r->txt_user = $nameuser;
+		    $r->start = $value->fecha_inicio;
+ 			$r->end = $value->fecha_final;
+ 			$r->txt_fecha_i = $value->fecha_inicio;
+			$r->txt_fecha_f = $value->fecha_final;
+ 			$r->complete = $value->progres;
+
+			$result[] = $r;
+		}
+		return $result;
+	}
+	public function actionEditprogres($id)
+	{
+		$rest = substr($id, -1);
+		$modeltareasDes = TareaDes::model()->findByPk($rest);
+
+		$this->renderPartial("_editprogress",array("model"=>$modeltareasDes));
+		
+	}
+
+	public function actionGuardarprogres()
+	{
+		header('Content-Type: application/json');
+		$id = $_POST['TareaDes']['ID'];
+		$modeltareasDes = TareaDes::model()->findByPk($id);
+		$modeltareasDes->attributes = $_POST['TareaDes'];
+		$modeltareasDes->fecha_inicio = date("Y-m-d",strtotime($modeltareasDes->fecha_inicio));
+		$modeltareasDes->fecha_final = date("Y-m-d",strtotime($modeltareasDes->fecha_final));
+		$modeltareasDes->status = "activo";
+		$modeltareasDes->progres = $_POST['TareaDes']['progres'];
+
+		if ($modeltareasDes->save()) {
+			echo json_encode(array('result' => 'OK'));
+		}
+	}
 	private static function ultimoid(){
 	    $sql = "select max(ID) as max from tarea";
 	    $resid = yii::app()->db->createCommand($sql)->queryAll();

@@ -37,7 +37,7 @@ class TareaDes extends CActiveRecord
 			array('fecha_hora', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('ID, id_tarea, descripcion, fecha_inicio, fecha_final, status, fecha_hora', 'safe', 'on'=>'search'),
+			array('ID, id_tarea, descripcion, fecha_inicio, fecha_final, status, progres, fecha_hora', 'safe', 'on'=>'search'),
 		);
 	}
 

@@ -212,6 +212,7 @@
 	</script>
 	<link href="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/magnific-popup/magnific-popup.min.css" rel="stylesheet">
 	<script src="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+	<script src="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/daypilot/daypilot-all.min.js"></script>
 
 	<script type="text/javascript">
 		//$('head style[type="text/css"]').attr('type', 'text/less');
