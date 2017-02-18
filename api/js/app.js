@@ -2,8 +2,8 @@ var $appfinancial = new Object;
 //console.log(window.location.href );
 
 (function(){
-	//this.HOST  = "http://api.proyecto.mipc";
-	this.HOST  ="http://administradordeproyectos.com/api/"; //esdel dominio
+	this.HOST  = "http://api.proyecto.mipc";
+	//this.HOST  ="http://administradordeproyectos.com/api/"; //esdel dominio
 
 	this.init = function() {
 		//este es el que  envia el formulario del login

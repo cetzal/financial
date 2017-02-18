@@ -1,5 +1,5 @@
 <?php
-
+Yii::import('application.extensions.usuarios.validaUsuario');
 class UsuariosController extends Controller
 {
 	public function filters()
@@ -37,9 +37,27 @@ class UsuariosController extends Controller
 			)
 		);
 	}
+	public $modulo = ".menuUsuarios";
+
+	public function checkTokenPermisos($modulo = "", $accion = "")
+	{
+		$validaUsuario = new validaUsuario;
+		$response = $validaUsuario->validar(Yii::app()->user->id, $modulo);
+		if($response == false){
+			$this->render("/views/error", array("code" => "403", "message" => $validaUsuario->getErrorMessage() ));
+			exit();
+		}
+		if($accion == "ver"){
+			if(!$validaUsuario->crear()){
+				$this->renderPartial("/views/error", array("code" => "403", "message" => $validaUsuario->getErrorMessage() ));
+				exit();
+			}
+		}
+	}
 
 	public function actionIndex()
-	{
+	{	
+		$this->checkTokenPermisos($this->modulo,"ver");
 
 		$this->render('index');
 	}
