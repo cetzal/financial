@@ -14,26 +14,66 @@ class ProyectosController extends Controller
 				'propertyName'=>'propertyValue',
 			),
 		);
-	}
-
-	public function actions()
-	{
-		// return external action classes, e.g.:
+	}*/
+	public function filters()
+    {
+        return array(
+            'accessControl',
+        );
+    }
+    public function accessRules() {
 		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
+			array (
+					'allow', // allow admin user to perform 'admin' and 'delete' actions
+					'actions' => array (
+						'Index',
+						'Temas',
+						'Guardartema',
+						'AgregarListTareas',
+						'Guardartarea',
+						'Crearlistatarea',
+						'TodoTareas',
+						'ViewsList',
+						'Delete',
+						'Editar',
+						'EditartodoTareas',
+						'Listgantt',
+						'Editprogres',
+						'Guardarprogres',
+						'dataCombo',
+						'TareasFecha'
+					),
+					'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getPerfil()=='ADMINISTRADOR'"
 			),
+			array (
+					'allow', // allow admin user to perform 'admin' and 'delete' actions
+					'actions' => array (							
+					),
+					'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getUser()=='admin2'"
+			),
+			array (
+				'allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions' => array (
+				'index',
+				'listgantt',
+				),
+				'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getPerfil()=='COORDINADOR'"				
+			),
+			array (
+				'deny', // deny all users
+				'users' => array (
+						'*'
+				)
+			)
 		);
 	}
-	*/
 	public function actionIndex()
 	{
 
-		$modelTema = Tema::model()->findAll();
+		$modelTema = Tema::model()->findAll("tipo = 'tema'");
+		$modelProyecto = Tema::model()->findAll("tipo = 'proyecto'");
 
-		$this->render('index', array('fechas'=>$modelTema));
+		$this->render('index', array('fechas'=>$modelTema,"proyecto"=>$modelProyecto));
 	}
 
 	public function actionCalendario()
@@ -66,6 +106,7 @@ class ProyectosController extends Controller
 
 		$model->nombre = $nombre;
 		$model->fecha = date("Y-m-d");
+		$model->tipo="tema";
 
 		if ($model->save()) {
 			echo json_encode(array('response'=>'Success','mensaje'=>'sii'));
@@ -74,7 +115,23 @@ class ProyectosController extends Controller
 			echo json_encode(array('response'=>'Error','mensaje'=>'noo'));
 		}
 	}
+	public function actionGuardarProyecto()
+	{
+		$model = new Tema();
+		$nombre = $_POST['nombre'];
 
+		$model->nombre = $nombre;
+		$model->fecha = date("Y-m-d");
+		$model->tipo="proyecto";
+
+		if ($model->save()) {
+			echo json_encode(array('response'=>'Success','mensaje'=>'sii'));
+		}else
+		{
+			echo json_encode(array('response'=>'Error','mensaje'=>'noo'));
+		}
+
+	}
 	public function actionAgregarListTareas($id)
 	{
 		$model = $this->loadModel($id);
@@ -116,6 +173,7 @@ class ProyectosController extends Controller
 			$modelDest->fecha_inicio = date("Y-m-d",strtotime($modelDest->fecha_inicio));
 			$modelDest->fecha_final = date("Y-m-d",strtotime($modelDest->fecha_final));
 			$modelDest->status = "activo";
+			$modelDest->progres = 0;
 			
 			if ($modelDest->save()) 
 			{
@@ -174,6 +232,7 @@ class ProyectosController extends Controller
 		$modeltareasDes->fecha_inicio = date("Y-m-d",strtotime($modeltareasDes->fecha_inicio));
 		$modeltareasDes->fecha_final = date("Y-m-d",strtotime($modeltareasDes->fecha_final));
 		$modeltareasDes->status = "activo";
+		//$modelDest->progres = 0;
 
 		if ($modeltareasDes->save()) {
 			TareasUsuario::model()->deleteAll("id_des_tareas =".$id);
@@ -197,8 +256,11 @@ class ProyectosController extends Controller
 	public function actionListgantt()
 	{
 		header('Content-Type: application/json');
+		$idtema = $_POST['idmult'];	
 		$result = array();
 		$datecurrent = date("Y-m-d");
+
+		if ($idtema !="") { $tarea = Tarea::model()->findAll("id_tema =".$idtema); }else{ $tarea = Tarea::model()->findAll(); }
 
 		/*$sql = "SELECT tm.ID AS idtema, tm.nombre as Ntema, tm.descripcion as desT, ta.ID AS idtarea,
 				ta.id_tema, ta.titulo, ta.descripcion as destarea, ta.fecha_hora as tafechahora, dest.ID as iddest,
@@ -213,7 +275,7 @@ class ProyectosController extends Controller
 		/*$consult = Yii::app()->db->createCommand($sql)->queryAll();*/
 
 		/*$tema = Tema::model()->findAll();*/
-		$tarea = Tarea::model()->findAll();
+		
 
 		foreach ($tarea as $key => $value) {
 			$r = new Task();
@@ -240,6 +302,8 @@ class ProyectosController extends Controller
 	public function children($id)
 	{	
 		$result = array();
+		$nameuser = "";
+		$sueldo = 0;
 		$modeltareasDes = TareaDes::model()->findAll("id_tarea =".$id);
 		foreach ($modeltareasDes as $key => $value) {
 			$r = new Task();
@@ -247,16 +311,22 @@ class ProyectosController extends Controller
 			$asinados = TareasUsuario::model()->findAll("id_des_tareas =".$value->ID);
 
 			foreach ($asinados as $key => $userss) {
-
 				$username = User::model()->find('ID ='.$userss->id_usuario);
 
-				$nameuser = $username->usuario;
+				if (!is_null($username)) {
+					$nameuser = $username->usuario;
+					$sueldo = $username->sueldo;
+				}
+
+				
 			}
-			
+			//calculando costos
 
 			$r->id = "0".$value->ID;
 		    $r->txt_tema = htmlspecialchars($value->descripcion);
 		    $r->txt_user = $nameuser;
+
+		    $r->txt_costo =$this->dias_transcurridos($value->fecha_inicio,$value->fecha_final) * $sueldo;
 		    $r->start = $value->fecha_inicio;
  			$r->end = $value->fecha_final;
  			$r->txt_fecha_i = $value->fecha_inicio;
@@ -318,6 +388,42 @@ class ProyectosController extends Controller
 		if ($model === null)
 			throw new CHttpException ( 404, 'The requested page does not exist.' );
 		return $model;
+	}
+	function dias_transcurridos($fecha_i,$fecha_f)
+	{
+		$dias	= (strtotime($fecha_i)-strtotime($fecha_f))/86400;
+		$dias 	= abs($dias); $dias = floor($dias);		
+		return $dias;
+	}
+
+	public function actionDataCombo()
+	{
+		header('Content-Type: application/json');
+		$tipo = $_POST['tipo'];
+		$res ="";
+		$status = "error";
+		$message = "";
+
+		$model = Tema::model()->findAll("tipo ='".$tipo."'");
+
+		if (!is_null($model)) {
+			$status = "success";
+			$res .= "<option value=''> Seleccione ".$tipo."</option> ";
+			foreach ($model as $key => $value) {
+				$res.= "<option value ='".$value->ID."''>".$value->nombre."</option>";
+			}
+		}else
+		{
+			$message = "Este empleado no esta asignado a ningun periodo de nómina";
+		}
+
+		echo json_encode(array("status"=>$status, 'response'=>$message, 'data'=>$res));
+	}
+
+	public function actionTareasFecha()
+	{
+		$tareasDes = TareaDes::model()->findAll();
+		$this->render("_calendariotareas", array('data'=>$tareasDes));
 	}
 
 

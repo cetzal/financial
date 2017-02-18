@@ -105,7 +105,7 @@
 	});
 </script>
 <div class="contenedor">
-	<h1>Tema : <?php echo $model->nombre; ?></h1>
+	<h1><?php if ($model->tipo =="tema") {echo "Tema";} else{ echo "Proyecto";} ?> : <?php echo $model->nombre; ?></h1>
 	<div class="row-fluid">
 		<?php
 			$buttons=array(

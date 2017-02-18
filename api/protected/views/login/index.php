@@ -23,6 +23,8 @@
 <link href="<?php echo yii::app()->request->baseUrl; ?>/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
 <link href="<?php echo yii::app()->request->baseUrl; ?>/assets/css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
 <link href="<?php echo yii::app()->request->baseUrl; ?>/assets/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/toastr/toastr.min.css" rel="stylesheet">
+	<script src="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/toastr/toastr.min.js"></script>
 <!-- //Custom Theme files -->
 <!-- web font -->
 <link href="//fonts.googleapis.com/css?family=Oswald:400,700" rel="stylesheet">

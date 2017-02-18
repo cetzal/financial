@@ -9,13 +9,14 @@ class LoginController extends Controller
 
 	public function actionMake()
 	{
+		header('Content-Type: application/json');
 		$model = new User();
 
 		if(isset($_POST['LoginForm']))
 		{
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
-			if( $model->login())
+			if($model->login())
 			{
 
 				//$this->redirect(Yii::app()->user->returnUrl);
@@ -23,8 +24,8 @@ class LoginController extends Controller
 				/*var_dump($_SERVER['REMOTE_ADDR']);*/
 			}
 			else{
-				var_dump($model->login());
-				echo "string";
+				//var_dump($model->login());
+				echo json_encode(array('response'=>'error','msg'=>"Usuario o Password incorrecta"));
 			}
 		}
 		/*$this->redirect(Yii::app()->user->returnUrl);*/

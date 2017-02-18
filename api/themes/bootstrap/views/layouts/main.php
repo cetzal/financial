@@ -213,6 +213,8 @@
 	<link href="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/magnific-popup/magnific-popup.min.css" rel="stylesheet">
 	<script src="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
 	<script src="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/daypilot/daypilot-all.min.js"></script>
+	<link href="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/toastr/toastr.min.css" rel="stylesheet">
+	<script src="<?php echo yii::app()->request->baseUrl; ?>/assets/plugins/toastr/toastr.min.js"></script>
 
 	<script type="text/javascript">
 		//$('head style[type="text/css"]').attr('type', 'text/less');
@@ -349,7 +351,7 @@
 			'class'=>'navbarTop',
 		),
 		'items'=>array(
-			'<div class="pull-left" style="margin-bottom:5px"><a href="'.Yii::app()->baseUrl.'"><img style="height:20px;padding:20px 5px 5px 5px;" src="'.Yii::app()->baseUrl.'/images/main/logosoftcredito70.png" /></a></div>',
+			'<div class="pull-left" style="margin-bottom:5px"><a href="'.Yii::app()->baseUrl.'"><img style="height:20px;padding:20px 5px 5px 5px;" src="'.Yii::app()->baseUrl.'/images/main/logoadmin.png" /></a></div>',
 			'<div class="nav pull-left">
 				<li class="dropdown">
 		            <a href="'.Yii::app()->createUrl("proyectos/index").'">Proyectos</a>
@@ -358,17 +360,17 @@
 		            </ul>
 		        </li>
 			</div>',
-			'<div class="nav pull-left">
+			/*'<div class="nav pull-left">
 				<li class="dropdown">
 		            <a href="'.Yii::app()->createUrl("catalogoAnalisis/index").'">Analisis</a>
 		            <ul class="dropdown-menu" role="menu">
 		               
 		            </ul>
 		        </li>
-			</div>',
+			</div>',*/
 			'<div class="nav pull-left">
 				<li class="dropdown">
-		            <a href="'.Yii::app()->createUrl("catalogoSistemaSupervision/index").'">Supervisión</a>
+		            <a href="'.Yii::app()->createUrl("usuarios/index").'">usuarios</a>
 		            <ul class="dropdown-menu" role="menu">
 						
 		            </ul>
@@ -376,50 +378,50 @@
 			</div>',
 			'<div class="nav pull-left">
 				<li class="dropdown">
-		            <a href="'.Yii::app()->createUrl("catalogoReportes/index").'">Reportes</a>
+		            <a href="'.Yii::app()->createUrl("reportes/index").'">Reportes</a>
 		            <ul class="dropdown-menu" role="menu">
 						
 		            </ul>
 		        </li>
 			</div>',
-			'<div class="nav pull-left">
+			/*'<div class="nav pull-left">
 				<li class="dropdown">
 		           <a href="'.Yii::app()->createUrl("catalogoSistemaPLD/index").'">PLD</a>
 		            <ul class="dropdown-menu" role="menu">
 				
 		            </ul>
 		        </li>
-			</div>',
-			'<div class="nav pull-left">
+			</div>',*/
+			/*'<div class="nav pull-left">
 				<li class="dropdown">
 		           <a href="'.Yii::app()->createUrl("catalogoContabilidad/index").'">Contabilidad</a>
 		            <ul class="dropdown-menu" role="menu">
 				
 		            </ul>
 		        </li>
-			</div>',
-			'<div class="nav pull-left">
+			</div>',*/
+			/*'<div class="nav pull-left">
 				<li class="dropdown">
 		           <a href="'.Yii::app()->createUrl("catalogoFactoraje/index").'">Factoraje</a>
 		            <ul class="dropdown-menu" role="menu">
 				
 		            </ul>
 		        </li>
-			</div>',
+			</div>',*/
 			'<div id="tareas" class="pull-right" style="background-color:#193669; height:60px;">
 				<div class="pull-right" style="height:100%">
 					<div class="pull-right tarea" style="padding-top:10px;padding-right:10px;font-weight:bold; padding-left:10px;text-align:center;">'.
 						(Yii::app()->user->isGuest?"":'<a style="color:#fff;" href="'.Yii::app()->createUrl("site/logout").'"><img src="'.Yii::app()->baseUrl.'/images/botones/btnSalir40.png" style="height:22px" alt="Salir" title="Salir"><span class="texto-tarea">Salir</span></a>').'
 					</div>
-					<div class="pull-right tarea" style="padding-top:10px;padding-right:10px;font-weight:bold; padding-left:10px;text-align:center;">'.
+					<!--<div class="pull-right tarea" style="padding-top:10px;padding-right:10px;font-weight:bold; padding-left:10px;text-align:center;">'.
 						(Yii::app()->user->isGuest?"":'<a style="color:#fff;" href="'.Yii::app()->createUrl("usuarios/changePassword").'"><img src="'.Yii::app()->baseUrl.'/images/botones/btnChangePassword40.png" style="height:22px" alt="Cambiar Contraseña" title="Cambiar Contraseña"><span class="texto-tarea">Acceso</span></a>').'
-					</div>
+					</div>-->
 					<!--<div class="pull-right tarea" style="padding-top:10px;font-weight:bold; padding-left:10px;text-align:center;">
 						<a style="color:#fff;" href="'.Yii::app()->createUrl("avisos/index").'"><span style="font-weight: bold;color: #F7F1F1;position:relative;bottom:10px;margin-right:-20px;font-size:10px;background-color: #E68038;border-radius: 15px;padding: 2px 5px;"></span><img src="'.Yii::app()->baseUrl.'/images/botones/btnAvisos40.png" style="width:22px" alt="Avisos" title="Avisos"><span class="texto-tarea">Avisos</span></a>
 					</div>-->
-					<div class="nav pull-right tarea" style="padding-top:10px;font-weight:bold;padding-left:10px;text-align:center;">
+					<!--<div class="nav pull-right tarea" style="padding-top:10px;font-weight:bold;padding-left:10px;text-align:center;">
 						<a style="color:#fff;" href="'.Yii::app()->createUrl("catalogoParametrizacion/index").'"><img src="'.Yii::app()->baseUrl.'/images/botones/configuracion.png" style="width:22px" alt="Configuración" title="Configuración"><span class="texto-tarea">Config.</span></a>
-					</div>
+					</div>-->
 					<!--<div class="nav pull-right tarea" style="padding-top:10px;font-weight:bold;padding-left:10px;text-align:center;">
 						<a style="color:#fff;" target="_blank" href="http://faq.softcredito.com"><img src="'.Yii::app()->baseUrl.'/images/botones/faq.png" style="width:22px" alt="FAQ" title="FAQ"><span class="texto-tarea">FAQ</span></a>
 					</div>-->

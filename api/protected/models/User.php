@@ -51,7 +51,7 @@ class User extends CActiveRecord
 			array('idioma', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('ID, nombre, usuario, password, estatus, email, url_imagen, permiso_ID, reset_token', 'safe', 'on'=>'search'),
+			array('ID, nombre, usuario, password, estatus, email, url_imagen, permiso_ID, reset_token sueldo', 'safe', 'on'=>'search'),
 			array('usuario', 'ECompositeUniqueValidator', 
             'attributesToAddError'=>'usuario',
             'message'=>'El Nombre de usuario  ya se encuentra registrado.'),
@@ -89,6 +89,7 @@ class User extends CActiveRecord
 			'permiso_ID' => 'Permiso',
 			'reset_token' => 'Reset Token',
 			'idioma' => 'Idioma',
+			'sueldo' => 'Sueldo diario',
 		);
 	}
 
@@ -120,6 +121,7 @@ class User extends CActiveRecord
 		$criteria->compare('permiso_ID',$this->permiso_ID);
 		$criteria->compare('reset_token',$this->reset_token,true);
 		$criteria->compare('idioma',$this->idioma,true);
+		$criteria->compare('sueldo',$this->sueldo,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

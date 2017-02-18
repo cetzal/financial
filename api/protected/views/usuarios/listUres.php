@@ -1,17 +1,36 @@
 <div class="contenedor">
 	<h1>Lista de Usuarios</h1>
 	<div class="row-fluid">
+		<?php
+			$buttons=array(
+				array(
+						'label'=>'Nuevo',
+						'type'=>'primary',
+						/*'url'=>Yii::app()->user->isPermittedUrl('administradores','create')?Yii::app()->createUrl("administradores/create"):"",*/
+						'url'=>Yii::app()->createUrl("usuarios/NuevoUsuario"),
+						'htmlOptions'=>array(
+								/*'class'=>Yii::app()->user->isPermittedUrl('administradores','create')?"":"btn-disabled"*/
+						),
+				),
+			);
+			$this->widget('bootstrap.widgets.TbButtonGroup', array(
+					'htmlOptions'=>array('class'=>'pull-right'),
+					'size'=>'small',
+					'buttons'=>$buttons
+			));
+		?>
 	</div>
 	<script>
-		jQuery(document).on("click","#administradores-grid a.delete",function() {
+		jQuery(document).ready(function($) {
+			jQuery(document).on("click","#Table_user-grid a.delete",function() {
 			if(!confirm("¿Realmente desea eliminar el administrador seleccionado?")) return false;
 			var th = this,
 			afterDelete = function(){};
-			jQuery("#administradores-grid").yiiGridView("update", {
+			jQuery("#Table_user-grid").yiiGridView("update", {
 				type: "POST",
 				url: jQuery(this).attr("href"),
 				success: function(data) {
-					jQuery("#administradores-grid").yiiGridView("update");
+					jQuery("#Table_user-grid").yiiGridView("update");
 					afterDelete(th, true, data);
 				},
 				error: function(XHR) {
@@ -20,14 +39,15 @@
 			});
 			return false;
 		});
+		});
 	</script>
 	<?php $this->widget('bootstrap.widgets.TbGridView', array( 
-			'id'=>'administradores-grid',
+			'id'=>'Table_user-grid',
 	    	'type'=>'bordered condensed',
 	    	'dataProvider'=>$usuarios->search(),
 			'filter'=>$usuarios,
 	    	'template'=>"{items}\n{pager}",
-			'selectionChanged' => 'ChangeHrefs',
+			/*'selectionChanged' => 'ChangeHrefs',*/
 	    	'columns'=>array(
 				array(
 						'name'=>'nombre',
@@ -76,6 +96,7 @@
 								'options'=>array(
 										'title'=>'Eliminar',
 										/*'class'=>Yii::app()->user->isPermittedUrl('administradores','delete')?"delete":"btn-disabled"*/
+										'class'=>"delete",
 								),
 						),
 					),

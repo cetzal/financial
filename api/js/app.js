@@ -2,7 +2,8 @@ var $appfinancial = new Object;
 //console.log(window.location.href );
 
 (function(){
-	this.HOST  = "http://api.proyecto.mipc";
+	//this.HOST  = "http://api.proyecto.mipc";
+	this.HOST  ="http://administradordeproyectos.com/api/"; //esdel dominio
 
 	this.init = function() {
 		//este es el que  envia el formulario del login
@@ -16,6 +17,8 @@ var $appfinancial = new Object;
 			if (LoginResponse.response == "Success") {
 				window.location=$appfinancial.HOST + "/" +LoginResponse.redirect;
 			}
+			toastr[LoginResponse.response](LoginResponse.msg);
+			//toastr.error("Por favor seleccione una cuadrila");
 		});
 		//este es para  los botnes
 		$(document).delegate(".btnMenuDelegated","click",function(e){
@@ -58,6 +61,17 @@ var $appfinancial = new Object;
 			}
 			
 		});
+		//guardar proyecto 
+		$(document).delegate('.btnguardarp', 'click', function(event) {
+			var nombretema = $('#nombret').val();
+			var response = $appfinancial.Event.gJSON("/proyectos/GuardarProyecto",{"nombre":nombretema},"POST",false);
+
+			if (response.response =="Success") {
+				window.location.reload();
+			}
+			
+		});
+
 		//from for crear tareas
 		$(document).delegate('#reassign-button', 'click', function(event) {
 			$('#cont-reassign-form').toggle();
@@ -152,6 +166,16 @@ var $appfinancial = new Object;
 			}
 			
 		});
+
+		//buscar y  mostrar reporte el boton esta en buscar reporte
+		$(document).delegate('.buscar', 'click', function(event) {
+			event.preventDefault();
+			id = $("#empleado_id").val();
+
+			$appfinancial.buscarTarea_persona(id);
+
+		});
+		
 		
 	};
 
@@ -159,6 +183,12 @@ var $appfinancial = new Object;
 	{
 		var view = $appfinancial.Event.gVIEWSecure("/proyectos/viewsList", {"idtarea": idtarea}, true);
 		$(".tareas").html(view);
+	}
+
+	this.buscarTarea_persona = function(id)
+	{
+        var view = $appfinancial.Event.gVIEWSecure("/reportes/reportePersona", {"iduser": id}, true);
+		$("#contenedort").html(view);
 	}
 
 	this.Event = new Object;

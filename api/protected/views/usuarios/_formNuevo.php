@@ -47,6 +47,7 @@ $empleado_ID = "";
 <?php echo $form->textFieldRow($model,'email',array('class'=>'span3')); ?>
 <?php echo $form->dropDownListRow($model, 'estatus', $array_estatus, array('class' => 'form-control')); ?>
 <?php echo $form->dropDownListRow($model, 'permiso_ID', $array_tipos, array('class' => 'form-control')); ?>
+<?php echo $form->textFieldRow($model,'sueldo',array('class'=>'span3')); ?>
 <?php //echo $form->dropDownListRow($empleado_ID, Empleado::getArrLista(), array('class'=>'form-control chosen-select',)); ?>
 
 <div class="form-actions">

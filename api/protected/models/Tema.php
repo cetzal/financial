@@ -30,6 +30,7 @@ class Tema extends CActiveRecord
 			array('nombre', 'required'),
 			array('nombre', 'length', 'max'=>250),
 			array('descripcion', 'length', 'max'=>250),
+			array('tipo', 'length', 'max'=>250),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('ID, nombre, descripcion, fecha, fecha_hora', 'safe', 'on'=>'search'),
@@ -55,7 +56,8 @@ class Tema extends CActiveRecord
 		return array(
 			'ID' => 'ID',
 			'nombre' => 'Nombre',
-			'descripcion' => 'descripción',
+			'descripcion' => 'Descripción',
+			'tipo' => 'Tipo',
 			'fecha' => 'Fecha',
 			'fecha_hora' => 'Fecha Hora',
 		);
@@ -83,6 +85,7 @@ class Tema extends CActiveRecord
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('fecha',$this->fecha,true);
 		$criteria->compare('descripcion',$this->descripcion, true);
+		$criteria->compare('tipo',$this->tipo, true);
 		$criteria->compare('fecha_hora',$this->fecha_hora,true);
 
 		return new CActiveDataProvider($this, array(
@@ -99,5 +102,21 @@ class Tema extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public static function getTema()
+	{
+		$tema = Tema::model()->findAll("tipo ='tema'");
+		$arrayList = array("0"=>"");
+		$array1 = array();
+
+		foreach ($tema as $key => $value) {
+			$array1[$value->ID] = $value->nombre;
+		}
+
+		$result = array_merge($arrayList, $array1);
+
+		return $result;
+
 	}
 }

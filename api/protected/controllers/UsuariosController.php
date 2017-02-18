@@ -13,50 +13,21 @@ class UsuariosController extends Controller
 			array (
 					'allow', // allow admin user to perform 'admin' and 'delete' actions
 					'actions' => array (							
-							'operaciones',
-							'dop',
 					),
 					'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getUser()=='admin2'"
 			),
 			array (
 					'allow', // allow admin user to perform 'admin' and 'delete' actions
 					'actions' => array (
-							'condonar',
-							'declinarCredito',
-							'vencerCredito',
-							'reestructurar',
-							'setDateA',
-							'operaciones',
-							'dop',
 					),
-					'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getPerfil()=='Administrador'"
+					'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getPerfil()=='ADMINISTRADOR'"
 			),
 			array (
 				'allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions' => array (
-						'index',
-						'Listausuarios',
-						'NuevoUsuario',
-						'parcialidades',
-						'pagar',
-						'closeamortizacion',
-						'pagarDisposicion',
-						'pagarIndividual',
-						'anticipar',						
-						'guardar',
-						'delete',
-						'mora',
-						'interes',
-						'export',
-						'calcularPlazo',
-						'grupoSolidario',
-						'pagarD',
-						'filterClientes',
-						'filterSolicitudes',
-						'getDeuda',
-						'disposicion',
+				'index',
 				),
-				'expression' => "Yii::app()->user->isPermitted()"				
+				'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getPerfil()=='COORDINADOR'"				
 			),
 			array (
 				'deny', // deny all users
@@ -69,6 +40,7 @@ class UsuariosController extends Controller
 
 	public function actionIndex()
 	{
+
 		$this->render('index');
 	}
 
@@ -100,6 +72,42 @@ class UsuariosController extends Controller
 			}
 		}
 		$this->render("usuarioNuevo", array("model" => $model));
+	}
+	public function actionUpdate($id)
+	{
+		$model = $this->loadModel ( $id );
+
+		if(isset ( $_POST ['User'] )) 
+		{
+			$model->attributes = $_POST ['User'];
+			$model->sueldo = $_POST['User']['sueldo'];
+			if ($model->save ())
+				$this->redirect ( array (
+						'listausuarios',
+				) );
+		}
+
+		$this->render ( 'update', array (
+				'model' => $model
+		) );
+
+	}
+	public function actionDelete($id)
+	{
+		$this->loadModel ( $id )->delete ();
+		
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(! isset ( $_GET ['ajax'] ))
+			$this->redirect ( isset ( $_POST ['returnUrl'] ) ? $_POST ['returnUrl'] : array (
+					'listUres' 
+			) );
+	}
+
+	public function loadModel($id) {
+		$model = User::model ()->findByPk ( $id );
+		if ($model === null)
+			throw new CHttpException ( 404, 'The requested page does not exist.' );
+		return $model;
 	}
 
 	// Uncomment the following methods and override them if needed

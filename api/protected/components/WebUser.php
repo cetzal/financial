@@ -21,7 +21,8 @@ class WebUser extends CWebUser {
 		$user = $this->loadUser ( Yii::app ()->user->id );
 		//$perfil=Permiso::model()->findByAttributes(array('clave'=>$user->perfil));
 		$perfil=Permiso::model()->findByAttributes(array('ID'=>$user->permiso_ID));
-		return $perfil->perfil;
+		//return $perfil->perfil;
+		return $perfil->nombre;
 	}
 	function getEmail() {
 		$user = $this->loadUser ( Yii::app ()->user->id );
@@ -127,7 +128,8 @@ class WebUser extends CWebUser {
 	function isPermittedUrl($controller,$action,$module=null) {
 		$user = $this->loadUser ( Yii::app ()->user->id );
 		if($user!==null){
-			$perfil=Perfiles::model()->findByAttributes(array('clave'=>$user->perfil));
+			//$perfil=Perfiles::model()->findByAttributes(array('clave'=>$user->perfil));
+			$perfil=Permiso::model()->findByAttributes(array('ID'=>$user->permiso_ID));
 			if($perfil){
 				$modulo=Modulos::model()->findByAttributes(array('nombre'=>$controller));
 				if($modulo){

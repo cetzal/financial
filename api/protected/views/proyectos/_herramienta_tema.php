@@ -6,7 +6,7 @@
 	<h1><?php echo $model->nombre; ?></h1>
 		<div class='mdl-grid btnmenutarget' id='id_tergeta' data-vars="">
 			<div class='mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-shadow--2dp'>
-       			<a class='card__link' data-role='project_card_content' href=''>
+       			<a class='card__link' data-role='project_card_content' href='<?php echo CController::createurl("proyectos/tareasFecha"); ?>'>
 	            	<div class='mdl-card__title'>
 	                 	<h5 class='mdl-card__title-text'>Calendario</h5>
 	            	</div>

@@ -7,6 +7,6 @@
  ?>
  
 <?php 
-    $this->renderPartial("proyectos");
+    $this->renderPartial("proyectos", array("proyectos"=>$proyecto));
  ?>
 </div>

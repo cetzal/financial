@@ -43,11 +43,11 @@
                                         Usuario
                                     </a>                                    
                                 </li>
-                                <!-- <li>
-                                       <a <?php //echo 'href="'.CController::createurl('usuarios/listausuarios').'"'; ?>>
-                                          Permisos
-                                       </a>                                    
-                                   </li>   -->                       
+                                <li>
+                                    <a <?php echo 'href="'.CController::createurl('usuarios/nuevoUsuario').'"'; ?>>
+                                        Crear Usuario
+                                    </a>                                    
+                                </li>                      
                             </ul>                           
                         </div>
                     </div>
