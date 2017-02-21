@@ -85,7 +85,21 @@ class validaUsuario{
 		var_dump($this->Mpermiso);
 		var_dump($this->permisos);
 	}
-
+	public function ver()
+	{
+		$permiso = $this->permisos;
+		$response = false;
+		if($permiso){
+			if($permiso->ver == "true"){
+				$response = true;
+				$this->messageError = "";
+			}else{
+				$this->messageError = "No tiene permitido editar este elemento";
+			}
+		}
+		if($this->nombreUsuario == "developer") {$response = true; };
+		return $response;
+	}
 	public function editar(){
 		$permiso = $this->permisos;
 		$response = false;
@@ -98,7 +112,7 @@ class validaUsuario{
 			}
 		}
 		if($this->nombreUsuario == "developer") {$response = true; };
-		return true;
+		return $response;
 	}
 
 	public function crear(){
@@ -130,7 +144,7 @@ class validaUsuario{
 			$this->messageError = "No tiene permiso para acceder a este modulo";
 		}
 		if($this->nombreUsuario == "developer") {$response = true; };
-		return true;
+		return $response;
 	}
 
 	public function imprimirPermisos($otroMensage = ""){

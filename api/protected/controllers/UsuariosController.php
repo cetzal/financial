@@ -2,41 +2,6 @@
 Yii::import('application.extensions.usuarios.validaUsuario');
 class UsuariosController extends Controller
 {
-	public function filters()
-    {
-        return array(
-            'accessControl',
-        );
-    }
-    public function accessRules() {
-		return array(
-			array (
-					'allow', // allow admin user to perform 'admin' and 'delete' actions
-					'actions' => array (							
-					),
-					'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getUser()=='admin2'"
-			),
-			array (
-					'allow', // allow admin user to perform 'admin' and 'delete' actions
-					'actions' => array (
-					),
-					'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getPerfil()=='ADMINISTRADOR'"
-			),
-			array (
-				'allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions' => array (
-				'index',
-				),
-				'expression' => "Yii::app()->user->isPermitted() AND Yii::app()->user->getPerfil()=='COORDINADOR'"				
-			),
-			array (
-				'deny', // deny all users
-				'users' => array (
-						'*'
-				)
-			)
-		);
-	}
 	public $modulo = ".menuUsuarios";
 
 	public function checkTokenPermisos($modulo = "", $accion = "")
@@ -48,15 +13,33 @@ class UsuariosController extends Controller
 			exit();
 		}
 		if($accion == "ver"){
+			if(!$validaUsuario->ver()){
+				$this->render("/views/error", array("code" => "403", "message" => $validaUsuario->getErrorMessage() ));
+				exit();
+			}
+		}
+		if($accion == "crear"){
 			if(!$validaUsuario->crear()){
-				$this->renderPartial("/views/error", array("code" => "403", "message" => $validaUsuario->getErrorMessage() ));
+				$this->render("/views/error", array("code" => "403", "message" => $validaUsuario->getErrorMessage() ));
+				exit();
+			}
+		}
+		if($accion == "editar"){
+			if(!$validaUsuario->editar()){
+				$this->render("/views/error", array("code" => "403", "message" => $validaUsuario->getErrorMessage() ));
+				exit();
+			}
+		}
+		if($accion == "eliminar"){
+			if(!$validaUsuario->eliminar()){
+				$this->render("/views/error", array("code" => "403", "message" => $validaUsuario->getErrorMessage() ));
 				exit();
 			}
 		}
 	}
 
 	public function actionIndex()
-	{	
+	{	//validador de permisos
 		$this->checkTokenPermisos($this->modulo,"ver");
 
 		$this->render('index');
@@ -64,6 +47,8 @@ class UsuariosController extends Controller
 
 	public function actionListausuarios()
 	{
+		$this->checkTokenPermisos($this->modulo,"ver");
+
 		/*$model = User::model()->findAll();*/
 		$model = new User();
 		$model->unsetAttributes ();
@@ -72,6 +57,7 @@ class UsuariosController extends Controller
 
 	public function actionNuevoUsuario()
 	{
+		$this->checkTokenPermisos($this->modulo,"crear");
 		$model = new User;
 
 		if (isset($_POST['User'])) {
@@ -93,6 +79,7 @@ class UsuariosController extends Controller
 	}
 	public function actionUpdate($id)
 	{
+		$this->checkTokenPermisos($this->modulo,"editar");
 		$model = $this->loadModel ( $id );
 
 		if(isset ( $_POST ['User'] )) 
@@ -112,6 +99,7 @@ class UsuariosController extends Controller
 	}
 	public function actionDelete($id)
 	{
+		$this->checkTokenPermisos($this->modulo,"eliminar");
 		$this->loadModel ( $id )->delete ();
 		
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser

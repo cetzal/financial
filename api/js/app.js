@@ -44,11 +44,9 @@ var $appfinancial = new Object;
 		});	
 
 		$(document).delegate('.btn-calcelar', 'click', function(event) {
-			//$(".content_imput").removeAttr('style');
-			//$(".contener_impor").css("display","none");
-			/*alert("hola");*/
+			event.preventDefault();
 			window.location.reload();
-			//$(".contener_impor").html("<div>hola</div>")
+			
 			
 		});
 		//guardar tema

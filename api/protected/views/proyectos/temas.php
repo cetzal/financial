@@ -8,6 +8,9 @@
         background: #ccc !important;
         color: #000 !important; 
     }
+    .content_imput{
+        display: inline-block;
+    }
     .contener_impor{
         display: none;
     }
@@ -58,9 +61,7 @@ $i = 0;
                                     <button class='mdl-button mdl-button--icon mdl-button--colored'><i class='material-icons'>favorite</i></button>
                                     <button class='mdl-button mdl-button--icon mdl-button--colored'><i class='material-icons'>share</i></button>
                                 </div>
-                        </div>
-                        
-                        ";
+                        </div>";
         }
 
         $content .= "

@@ -47,7 +47,12 @@
                                     <a <?php echo 'href="'.CController::createurl('usuarios/nuevoUsuario').'"'; ?>>
                                         Crear Usuario
                                     </a>                                    
-                                </li>                      
+                                </li> 
+                                <li>
+                                    <a <?php echo 'href="'.CController::createurl('Permisos/index').'"'; ?>>
+                                        Permisos
+                                    </a>                                    
+                                </li>                     
                             </ul>                           
                         </div>
                     </div>
