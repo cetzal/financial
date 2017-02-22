@@ -419,9 +419,9 @@
 					<!--<div class="pull-right tarea" style="padding-top:10px;font-weight:bold; padding-left:10px;text-align:center;">
 						<a style="color:#fff;" href="'.Yii::app()->createUrl("avisos/index").'"><span style="font-weight: bold;color: #F7F1F1;position:relative;bottom:10px;margin-right:-20px;font-size:10px;background-color: #E68038;border-radius: 15px;padding: 2px 5px;"></span><img src="'.Yii::app()->baseUrl.'/images/botones/btnAvisos40.png" style="width:22px" alt="Avisos" title="Avisos"><span class="texto-tarea">Avisos</span></a>
 					</div>-->
-					<!--<div class="nav pull-right tarea" style="padding-top:10px;font-weight:bold;padding-left:10px;text-align:center;">
-						<a style="color:#fff;" href="'.Yii::app()->createUrl("catalogoParametrizacion/index").'"><img src="'.Yii::app()->baseUrl.'/images/botones/configuracion.png" style="width:22px" alt="Configuración" title="Configuración"><span class="texto-tarea">Config.</span></a>
-					</div>-->
+					<div class="nav pull-right tarea" style="padding-top:10px;font-weight:bold;padding-left:10px;text-align:center;">
+						<a style="color:#fff;" href="'.Yii::app()->createUrl("configuracion/index").'"><img src="'.Yii::app()->baseUrl.'/images/botones/configuracion.png" style="width:22px" alt="Configuración" title="Configuración"><span class="texto-tarea">Config.</span></a>
+					</div>
 					<!--<div class="nav pull-right tarea" style="padding-top:10px;font-weight:bold;padding-left:10px;text-align:center;">
 						<a style="color:#fff;" target="_blank" href="http://faq.softcredito.com"><img src="'.Yii::app()->baseUrl.'/images/botones/faq.png" style="width:22px" alt="FAQ" title="FAQ"><span class="texto-tarea">FAQ</span></a>
 					</div>-->

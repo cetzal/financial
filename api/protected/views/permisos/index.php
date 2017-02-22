@@ -39,9 +39,9 @@
 						<a href="<?php echo Yii::app()->createUrl('permisos/updateModulo', array('id'=>$value->ID)) ?>">
 							<img src="<?php echo Yii::app()->baseUrl.'/images/botones/editar20.png'; ?>" alt="">
 						</a>
-						<a href="<?php echo Yii::app()->createUrl('permisos/deleteModulo', array('id'=>$value->ID)) ?>">
-							<img src="<?php echo Yii::app()->baseUrl.'/images/botones/eliminar20.png'; ?>" alt="">
-						</a>
+						<!-- <a href="<?php //echo Yii::app()->createUrl('permisos/deleteModulo', array('id'=>$value->ID)) ?>">
+							<img src="<?php //echo Yii::app()->baseUrl.'/images/botones/eliminar20.png'; ?>" alt="">
+						</a> -->
 					</td>
 				</tr>
 			<?php } ?>

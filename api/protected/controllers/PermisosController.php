@@ -46,18 +46,9 @@ class PermisosController extends Controller
 								$modelper->ver = "true";
 								
 							}
-							if (isset($value1['crear'])) {
-								$modelper->crear = "true";
-								
-							}
-							if (isset($value1['editar'])) {
-								$modelper->editar = "true";
-								
-							}
-							if (isset($value1['eliminar'])) {
-								$modelper->eliminar = "true";
-								
-							}
+							if (isset($value1['crear'])) { $modelper->crear = "true"; }
+							if (isset($value1['editar'])) { $modelper->editar = "true"; }
+							if (isset($value1['eliminar'])) { $modelper->eliminar = "true"; }
 							
 							$modelper->save();
 						}
