@@ -37,6 +37,17 @@ $form = $this->beginWidget ( 'bootstrap.widgets.TbActiveForm', array (
 <?php //echo $form->dropDownListRow($empresa, 'permiso_ID', $array_tipos, array('class' => 'form-control')); ?>
 <?php //echo $form->textFieldRow($empresa,'sueldo',array('class'=>'span3')); ?>
 <?php //echo $form->dropDownListRow($empleado_ID, Empleado::getArrLista(), array('class'=>'form-control chosen-select',)); ?>
+<?php
+				$this->widget('CMultiFileUpload', array(
+					'id'=>'DocumentosEntregados_archivos',
+			    	'name'=>'DocumentosEntregados[archivos]',
+			     	'accept'=>'pdf',	     	
+			     	'denied'=>'Archivo no permitido',
+				 	'duplicate'=>'El archivo ya ha sido adjuntado anteriormente',
+				 	'skin'=>'',
+			     	'max'=>4, // max 10 files 
+			  ));
+			?>
 
 <div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','type'=>'primary','label'=>Yii::t('common', 'Save'))); ?>

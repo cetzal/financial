@@ -31,7 +31,7 @@ class WebUser extends CWebUser {
 	function getHome(){
 		$user = $this->loadUser ( Yii::app ()->user->id );
 		if($user!==null){
-			$perfil=Perfiles::model()->findByAttributes(array('clave'=>$user->perfil));
+			$perfil=Permiso::model()->findByAttributes(array('clave'=>$user->permiso_ID));
 			$modulo=Modulos::model()->findByPk($perfil->id_modulo_inicial);
 			if($perfil->perfil=="Empleado"){
 				$url=$modulo->nombre.'/create';

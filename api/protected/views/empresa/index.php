@@ -1,6 +1,11 @@
 <?php
 /* @var $this EmpresaController */
-
+$this->setPageTitle ( Yii::t ( 'administradoresGenerales/common', 'empresa' ) );
+$this->breadcrumbs = array (
+		'<span class="btn btn-primary btn-small">home</span>' => array ("empresa/index" /*Yii::app()->user->getHome(),*/ ),
+		'<span class="btn btn-primary btn-small">empresa</span>'=>array('configuracion/index'),
+		'<span class="btn btn-small active">Administradores</span>'
+);
 ?>
 <div class="contenedor">
 
@@ -37,6 +42,21 @@ $form = $this->beginWidget ( 'bootstrap.widgets.TbActiveForm', array (
 <?php //echo $form->dropDownListRow($empresa, 'permiso_ID', $array_tipos, array('class' => 'form-control')); ?>
 <?php //echo $form->textFieldRow($empresa,'sueldo',array('class'=>'span3')); ?>
 <?php //echo $form->dropDownListRow($empleado_ID, Empleado::getArrLista(), array('class'=>'form-control chosen-select',)); ?>
+
+<div class="controls">
+<?php
+$this->widget('CMultiFileUpload', array(
+					'id'=>'empresa_logo',
+			    	'name'=>'empresa[logo]',
+			    	'attribute'=>'images',
+			     	'accept'=>'png|jpg',	     	
+			     	'denied'=>'Archivo no permitido',
+					/*'duplicate'=>'El archivo ya ha sido adjuntado anteriormente',*/
+				 	/*'skin'=>'',*/
+			     	'max'=>1, // max 10 files 
+			  ));
+			?>
+</div>			
 
 <div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','type'=>'primary','label'=>Yii::t('common', 'Save'))); ?>

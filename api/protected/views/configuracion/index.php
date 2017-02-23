@@ -1,5 +1,14 @@
 <?php
 /* @var $this ConfiguracionController */
+
+$this->breadcrumbs = array (
+        '<span class="btn btn-primary btn-small">home</span>' => array ("empresa/index"
+                //Yii::app()->user->getHome(),
+        ),
+        '<span class="btn btn-primary btn-small">configuracion</span>'=>array('empresa/index'),
+        '<span class="btn btn-small active">Administradores</span>'=>array('empresa/index'),
+);
+
 ?>
 <div id="new" class="titulos contenedor" style="text-align:left;">
     <h3>Confguracion General</h3>

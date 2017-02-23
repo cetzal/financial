@@ -4,6 +4,7 @@ class ConfigMailController extends Controller
 {
 	public function actionIndex()
 	{
+		$server = "";
 		$this->render('index');
 	}
 

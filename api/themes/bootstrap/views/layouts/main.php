@@ -368,14 +368,14 @@
 		            </ul>
 		        </li>
 			</div>',*/
-			'<div class="nav pull-left">
+			/*'<div class="nav pull-left">
 				<li class="dropdown">
 		            <a href="'.Yii::app()->createUrl("usuarios/index").'">usuarios</a>
 		            <ul class="dropdown-menu" role="menu">
 						
 		            </ul>
 		        </li>
-			</div>',
+			</div>',*/
 			'<div class="nav pull-left">
 				<li class="dropdown">
 		            <a href="'.Yii::app()->createUrl("reportes/index").'">Reportes</a>
@@ -459,6 +459,10 @@
 	');
 ?>
 <div id="enlaces" style="padding-top:70px;margin-left:98px;">
+<?php $this->widget('application.components.BreadCrumb', array(
+	  'newCrumb' =>
+	    array('name' => isset($this->crumbTitle)?$this->crumbTitle:$this->getPageTitle(), 'url' => array($_SERVER['REQUEST_URI']))
+	)); ?>
 	<div class="clearfix"></div>
 </div>
 <div class="container" id="page">
