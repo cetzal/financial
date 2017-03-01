@@ -99,7 +99,7 @@ class Empresa extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search()
+	/*public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
@@ -125,7 +125,7 @@ class Empresa extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
-	}
+	}*/
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -136,5 +136,15 @@ class Empresa extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	//para  obtener el id
+	public function getId() {
+		$id = 0;
+		$dataProvider = new CActiveDataProvider ( 'Empresa' );
+		if ($dataProvider->totalItemCount == 1) {
+			$dataEmpresa = $dataProvider->getData ();
+			$id = $dataEmpresa [0]->id;
+		}
+		return $id;
 	}
 }

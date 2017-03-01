@@ -94,6 +94,16 @@ class ConfigServidor extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	public function getCifrados()
+	{
+    	$data=array(
+    		array('id'=>'ninguno','nombre'=>'Ninguno'),
+    		array('id'=>'tls','nombre'=>'TLS'),
+    		array('id'=>'ssl','nombre'=>'SSL'),
+    		//array('id'=>'starttls','nombre'=>'STARTTLS'),
+    	);
+    	return CHtml::listData($data,"id", "nombre");
+    }
 
 	/**
 	 * Returns the static model of the specified AR class.

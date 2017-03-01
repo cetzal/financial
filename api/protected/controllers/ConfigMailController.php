@@ -4,8 +4,20 @@ class ConfigMailController extends Controller
 {
 	public function actionIndex()
 	{
-		$server = "";
-		$this->render('index');
+		$model = new ConfigServidor();
+		if(isset ( $_POST ['ConfigServidor'] )) {
+			if($model->save($_POST["ConfigServidor"])){
+				
+				Yii::app()->user->setFlash("success", "Se han guardado los cambios");
+			}else{
+				Yii::app()->user->setFlash("error", "No se puedieron guardar los cambios");
+			}
+		}
+		$this->render ( 'index', array (
+				'model' => $model
+		) );
+
+		
 	}
 
 	// Uncomment the following methods and override them if needed

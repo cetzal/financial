@@ -40,7 +40,7 @@ class Breadcrumb extends CWidget {
             // the new crumb is already in the list. If so, dump all the
             // crumbs from that crumb position to the end of the list. The
             // purpose of this is to keep the list clean of duplicates.
-            if ( sizeof($_SESSION['crumbs']) > 0 ) {
+            /*if ( sizeof($_SESSION['crumbs']) > 0 ) {
                 if ( array_key_exists($newCrumbKey, $_SESSION['crumbs'])) {
 
                     $offset = $this->array_offset($_SESSION['crumbs'], $newCrumbKey);
@@ -48,7 +48,7 @@ class Breadcrumb extends CWidget {
 
                 }
             }
-
+*/
             // Finally add the new crumb to the end of the list
             $_SESSION['crumbs'][$newCrumbKey]=$this->newCrumb;
 

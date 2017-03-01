@@ -1,3 +1,15 @@
+<script>
+    /*jQuery(document).ready(function($) {
+        alert('hola');
+    });*/
+
+   /* $(window).load(function() {790679
+        alert('hola');
+    });*/
+
+   
+</script>
+
 <?php
 /* @var $this ConfiguracionController */
 

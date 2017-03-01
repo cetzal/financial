@@ -1,3 +1,22 @@
+<script>
+	jQuery(document).ready(function() {
+		$("#Empresa_img_logo").change(function(){
+        		readURL(this);
+    	});
+
+		function readURL(input) {
+        		if (input.files && input.files[0]) {
+            		var reader = new FileReader();
+            		reader.onload = function (e) {
+                		$("#img_logo").attr("src", e.target.result);
+            		}
+            		reader.readAsDataURL(input.files[0]);
+        		}
+   	 		}
+
+			
+	});
+</script>
 <?php
 /* @var $this EmpresaController */
 $this->setPageTitle ( Yii::t ( 'administradoresGenerales/common', 'empresa' ) );
@@ -43,20 +62,23 @@ $form = $this->beginWidget ( 'bootstrap.widgets.TbActiveForm', array (
 <?php //echo $form->textFieldRow($empresa,'sueldo',array('class'=>'span3')); ?>
 <?php //echo $form->dropDownListRow($empleado_ID, Empleado::getArrLista(), array('class'=>'form-control chosen-select',)); ?>
 
-<div class="controls">
 <?php
-$this->widget('CMultiFileUpload', array(
-					'id'=>'empresa_logo',
-			    	'name'=>'empresa[logo]',
-			    	'attribute'=>'images',
-			     	'accept'=>'png|jpg',	     	
-			     	'denied'=>'Archivo no permitido',
-					/*'duplicate'=>'El archivo ya ha sido adjuntado anteriormente',*/
-				 	/*'skin'=>'',*/
-			     	'max'=>1, // max 10 files 
-			  ));
-			?>
-</div>			
+	if (isset ( $empresa->img_logo )) {
+		$src = Yii::app ()->request->baseUrl . '/images/main/' . $empresa->img_logo;
+	} else {
+		$src = Yii::app ()->request->baseUrl . '/images/main/logo_empresa.png';
+	}
+	?>
+
+<div class="control-group">
+		<label class="control-label" for="Empresa_logo">Logo</label>
+		<div class="controls">
+			<div class="media">
+				<img class="media-object span2 thumbnail" data-src="holder.js/200x140" src="<?php echo $src; ?>" id="img_logo">
+			</div>
+		</div>
+		<?php echo $form->fileFieldRow($empresa, 'img_logo',array('labelOptions'=>array('label'=>false) )); ?>
+	</div>		
 
 <div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','type'=>'primary','label'=>Yii::t('common', 'Save'))); ?>
